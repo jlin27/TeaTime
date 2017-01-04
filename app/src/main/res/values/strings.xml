@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">TeaTime</string>
+
+    <string name="size_small">Small</string>
+    <string name="size_medium">Medium</string>
+    <string name="size_large">Large</string>
+
+    <string name="add_milk">ADD MILK</string>
+
+    <string name="add_sugar">ADD SUGAR</string>
+
+    <string name="quantity">QUANTITY</string>
+
+    <string name="quantity_counter">- 1 +</string>
 </resources>
