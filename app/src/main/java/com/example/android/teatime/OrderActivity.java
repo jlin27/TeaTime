@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class OrderActivity extends AppCompatActivity {
 
@@ -76,7 +75,6 @@ public class OrderActivity extends AppCompatActivity {
      */
     public void checkMilk(View view) {
 
-        Toast.makeText(OrderActivity.this,""+ totalPrice + " " + quantity,Toast.LENGTH_SHORT).show();
         totalPrice = calculatePrice();
         displayCost(totalPrice);
     }
@@ -86,7 +84,6 @@ public class OrderActivity extends AppCompatActivity {
      */
     public void checkSugar(View view) {
 
-        Toast.makeText(OrderActivity.this,""+ totalPrice + " " + quantity,Toast.LENGTH_SHORT).show();
         totalPrice = calculatePrice();
         displayCost(totalPrice);
     }
@@ -171,7 +168,7 @@ public class OrderActivity extends AppCompatActivity {
      */
     private String createOrderSummary(int price, boolean addMilk, boolean addSugar) {
         String orderSummary = "The total cost is $" + price;
-        orderSummary += "\n" + "Your " + quantity + "teas will be ready soon!";
+        orderSummary += "\n" + "Your " + quantity + " teas will be ready soon!";
         return orderSummary;
     }
 }
