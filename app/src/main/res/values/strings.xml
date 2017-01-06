@@ -5,9 +5,9 @@
     <string name="size_medium">Medium</string>
     <string name="size_large">Large</string>
 
-    <string name="add_milk">Add Milk</string>
+    <string name="add_milk">Add Milk ($1/cup)</string>
 
-    <string name="add_sugar">Add Sugar</string>
+    <string name="add_sugar">Add Sugar($1/cup)</string>
 
     <string name="quantity">Quantity</string>
 
@@ -21,6 +21,7 @@
     <string name="tea_size">Size</string>
 
     <string-array name="tea_size_array">
+        <item>Select a size...</item>
         <item>Small</item>
         <item>Medium</item>
         <item>Large</item>

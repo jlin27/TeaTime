@@ -11,7 +11,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.example.android.teatime.TeaDetailActivity">
+    tools:context="com.example.android.teatime.OrderActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -81,10 +81,12 @@
             android:layout_height="wrap_content"
             android:text="@string/add_milk"/>
         <CheckBox
+            android:id="@+id/milkCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:checked="true"/>
+            android:checked="false"
+            android:onClick="checkMilk"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -99,10 +101,12 @@
             android:layout_height="wrap_content"
             android:text="@string/add_sugar"/>
         <CheckBox
+            android:id="@+id/sugarCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:checked="true"/>
+            android:checked="false"
+            android:onClick="checkSugar"/>
     </RelativeLayout>
 
 
@@ -153,17 +157,18 @@
 
         <TextView
             style="@style/FormTextStyle"
+            android:id="@+id/cost"
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/cost"
             android:layout_weight="1"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/order"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:onClick="submitOrder"/>
 
 
     </LinearLayout>

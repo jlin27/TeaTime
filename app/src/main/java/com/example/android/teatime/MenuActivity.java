@@ -10,12 +10,12 @@ import android.widget.GridView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_menu);
 
         // Create an arraylist of teas
         final ArrayList<Tea> teas = new ArrayList<Tea>();
@@ -39,12 +39,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 // Create a new intent to open the {@link TeaDetailActivity}
-                Intent teaIntent = new Intent(MainActivity.this, TeaDetailActivity.class);
+                Intent teaIntent = new Intent(MenuActivity.this, OrderActivity.class);
                 // Pass in the tea name to be displayed in the detail activity
                 String teaName = teas.get(position).getTeaName().toString();
                 teaIntent.putExtra("teaName",teaName);
                 // Start the new activity
-                startActivity(teaIntent);
+                if (teaIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(teaIntent);
+                }
             }
         });
 
