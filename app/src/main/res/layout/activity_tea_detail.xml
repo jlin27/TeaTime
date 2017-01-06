@@ -69,29 +69,41 @@
 
     </LinearLayout>
 
-    <CheckedTextView
-        style="@style/FormTextStyle"
-        android:id="@+id/checkbox_milk"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_gap"
-        android:layout_marginBottom="@dimen/default_gap"
-        android:layout_centerHorizontal="true"
-        android:paddingLeft="18dp"
-        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-        android:text="@string/add_milk"/>
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin">
 
-    <CheckedTextView
-        style="@style/FormTextStyle"
-        android:id="@+id/checkbox_sugar"
-        android:layout_marginTop="@dimen/default_gap"
-        android:layout_marginBottom="@dimen/default_gap"
+        <TextView
+            style="@style/FormTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_milk"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:checked="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:paddingLeft="18dp"
-        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-        android:text="@string/add_sugar"/>
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin">
+
+        <TextView
+            style="@style/FormTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_sugar"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:checked="true"/>
+    </RelativeLayout>
 
 
     <LinearLayout
