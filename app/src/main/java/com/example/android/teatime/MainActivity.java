@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -19,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Create an arraylist of teas
-        ArrayList<Tea> teas = new ArrayList<Tea>();
+        final ArrayList<Tea> teas = new ArrayList<Tea>();
         teas.add(new Tea("Black Tea", Color.parseColor("#9E9E9E")));
         teas.add(new Tea("Green Tea", Color.parseColor("#84C542")));
         teas.add(new Tea("White Tea", Color.parseColor("#FFFFFF")));
@@ -39,10 +38,11 @@ public class MainActivity extends AppCompatActivity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "" + position,
-                        Toast.LENGTH_SHORT).show();
                 // Create a new intent to open the {@link TeaDetailActivity}
                 Intent teaIntent = new Intent(MainActivity.this, TeaDetailActivity.class);
+                // Pass in the tea name to be displayed in the detail activity
+                String teaName = teas.get(position).getTeaName().toString();
+                teaIntent.putExtra("teaName",teaName);
                 // Start the new activity
                 startActivity(teaIntent);
             }
