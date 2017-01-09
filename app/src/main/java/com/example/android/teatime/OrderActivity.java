@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.icu.text.NumberFormat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Spinner;
@@ -14,9 +16,13 @@ public class OrderActivity extends AppCompatActivity {
 
     int quantity = 0;
     int totalPrice = 0;
-    int basePrice = 5;
+    int basePrice = 5; // Small tea price with no additions
+    int medAddPrice = 1; // Additional price over basePrice for medium tea price with no additions
+    int largeAddPrice = 2; // Additional price over basePrice for large tea price with no additions
     boolean addMilk = false;
     boolean addSugar = false;
+    String teaName ="";
+    int size;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +31,7 @@ public class OrderActivity extends AppCompatActivity {
 
         // Set header name depending on which item was clicked in the gridView
         Intent intent = getIntent();
-        String teaName = intent.getStringExtra("teaName");
+        teaName = intent.getStringExtra("teaName");
         TextView teaNameTextView = (TextView) findViewById(R.id.tea_name);
         teaNameTextView.setText(teaName);
 
@@ -34,18 +40,55 @@ public class OrderActivity extends AppCompatActivity {
                 R.id.cost);
         costTextView.setText("$0.00");
 
-
-        Spinner spinner = (Spinner) findViewById(R.id.tea_size_spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.tea_size_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        setupSpinner();
 
     }
 
+    /**
+     * Setup the dropdown spinner for user to select tea size
+     */
+    private void setupSpinner() {
+
+
+        Spinner mSizeSpinner = (Spinner) findViewById(R.id.tea_size_spinner);
+
+        // Create an ArrayAdapter using the string array and a default mSizeSpinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.tea_size_array, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the mSizeSpinner
+        mSizeSpinner.setAdapter(adapter);
+
+        // Set the integer mSelected to the constant values
+        mSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selection = (String) parent.getItemAtPosition(position);
+                if (!TextUtils.isEmpty(selection)) {
+                    if (selection.equals(getString(R.string.size_small))) {
+                        size = 0; // Small
+                    } else if (selection.equals(getString(R.string.size_medium))) {
+                        size = 1; // Medium
+                    } else {
+                        size = 2; // Large
+                    }
+                }
+            }
+
+            // Because AdapterView is an abstract class, onNothingSelected must be defined
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                return;
+                /**
+                 * Need to add code that prevents user from moving forward if not selected
+                 */
+            }
+        });
+
+    }
 
 
     /**
@@ -103,7 +146,15 @@ public class OrderActivity extends AppCompatActivity {
         CheckBox sugarCheckBox = (CheckBox) findViewById(R.id.sugarCheckBox);
         addSugar = sugarCheckBox.isChecked();
 
-        totalPrice += quantity * basePrice;
+
+        // Determine tea size price
+        if (size == 0) {
+            totalPrice = quantity * basePrice;
+        } else if (size == 1) {
+            totalPrice = quantity * (basePrice + medAddPrice);
+        } else {
+            totalPrice = quantity * (basePrice + largeAddPrice);
+        }
 
         // If the user wants milk, add $1 per cup
         if (addMilk) {
@@ -145,30 +196,17 @@ public class OrderActivity extends AppCompatActivity {
      */
     public void submitOrder(View view) {
 
-
-        // Display the order summary on the screen
-        String orderSummary = createOrderSummary(totalPrice, addMilk, addSugar);
-
         // Create a new intent to open the {@link OrderSummaryActvitiy}
         Intent intent = new Intent(OrderActivity.this, OrderSummaryActivity.class);
-        intent.putExtra("orderSummary",orderSummary);
+        intent.putExtra("totalPrice",totalPrice);
+        intent.putExtra("teaName",teaName);
+        intent.putExtra("size",size);
+        intent.putExtra("addMilk",addMilk);
+        intent.putExtra("addSugar",addSugar);
+        intent.putExtra("quantity",quantity);
 
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }
-    }
-
-    /**
-     * Create summary of the order.
-     *
-     * @param price           of the order
-     * @param addMilk         is whether or not to add milk to the tea
-     * @param addSugar        is whether or not to add sugar to the tea
-     * @return text summary
-     */
-    private String createOrderSummary(int price, boolean addMilk, boolean addSugar) {
-        String orderSummary = "The total cost is $" + price;
-        orderSummary += "\n" + "Your " + quantity + " teas will be ready soon!";
-        return orderSummary;
     }
 }
