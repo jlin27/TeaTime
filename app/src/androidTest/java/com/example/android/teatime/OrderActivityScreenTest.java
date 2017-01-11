@@ -33,7 +33,7 @@ public class OrderActivityScreenTest {
     // (3) Verify outcome of actions with view assertion
     @Test
     public void clickDecrementButton_showQuantity() throws Exception{
-        // Click on the order button
+        // Click on the decrement button
         onView(withId(R.id.decrement_button))
                 .perform(click());
         // Check if the order summary screen is displayed

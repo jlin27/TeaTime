@@ -15,12 +15,14 @@ public class OrderSummaryActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String teaName = intent.getStringExtra("teaName");
         int price = intent.getIntExtra("totalPrice",0);
-        int size = intent.getIntExtra("size",0);
+        String size = intent.getStringExtra("size");
         boolean addMilk = intent.getBooleanExtra("addMilk",false);
         boolean addSugar = intent.getBooleanExtra("addSugar",false);
         int quantity = intent.getIntExtra("quantity",0);
 
-        displayOrderSummary(teaName, quantity, price, addMilk, addSugar);
+
+
+        displayOrderSummary(teaName, price, size, addMilk, addSugar, quantity);
     }
 
     /**
@@ -33,18 +35,34 @@ public class OrderSummaryActivity extends AppCompatActivity {
      * @param addSugar         is whether or not to add sugar to the tea
      * @return text summary
      */
-    private void displayOrderSummary(String teaName, int quantity, int price, boolean addMilk,
-                                      boolean addSugar) {
+    private void displayOrderSummary(String teaName, int price, String size, boolean addMilk,
+                                      boolean addSugar, int quantity) {
 
-        String orderSummary = "Tea ordered: " + teaName;
-        orderSummary += "\nQuantity: " + quantity;
-        if(addMilk) {orderSummary += "\nWith Milk ";}
-        if(addSugar) {orderSummary += "\nWith Sugar ";}
-        orderSummary += "\nTotal Price: $" + price;
+        // Set tea name in order summary
+        TextView teaNameTextView = (TextView) findViewById(
+                R.id.summary_tea_name);
+        teaNameTextView.setText(teaName);
 
-        // Set order summary text
-        TextView orderSummaryTextView = (TextView) findViewById(
-                R.id.order_summary);
-        orderSummaryTextView.setText(orderSummary);
+        // Set tea size in order summary
+        TextView sizeTextView = (TextView) findViewById(
+                R.id.summary_tea_size);
+        sizeTextView.setText(size);
+
+        // Set milk addition in order summary
+        if(addMilk) {
+            TextView milkTextView = (TextView) findViewById(
+                    R.id.summary_add_milk);
+            milkTextView.setText("@string/add_milk");
+        }
+
+        // Set sugar addition in order summary
+        if(addSugar){
+            TextView sugarTextView = (TextView) findViewById(
+                    R.id.summary_add_sugar);
+            sugarTextView.setText("@string/add_sugar");
+        }
+
+
+
     }
 }

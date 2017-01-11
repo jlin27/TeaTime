@@ -22,7 +22,7 @@ public class OrderActivity extends AppCompatActivity {
     boolean addMilk = false;
     boolean addSugar = false;
     String teaName ="";
-    int size;
+    String size;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +69,11 @@ public class OrderActivity extends AppCompatActivity {
                 String selection = (String) parent.getItemAtPosition(position);
                 if (!TextUtils.isEmpty(selection)) {
                     if (selection.equals(getString(R.string.size_small))) {
-                        size = 0; // Small
+                        size = "Small";
                     } else if (selection.equals(getString(R.string.size_medium))) {
-                        size = 1; // Medium
+                        size = "Medium";
                     } else {
-                        size = 2; // Large
+                        size = "Large";
                     }
                 }
             }
@@ -148,9 +148,9 @@ public class OrderActivity extends AppCompatActivity {
 
 
         // Determine tea size price
-        if (size == 0) {
+        if (size.equals("Small")) {
             totalPrice = quantity * basePrice;
-        } else if (size == 1) {
+        } else if (size.equals("Medium")) {
             totalPrice = quantity * (basePrice + medAddPrice);
         } else {
             totalPrice = quantity * (basePrice + largeAddPrice);

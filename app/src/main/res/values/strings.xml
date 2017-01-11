@@ -20,6 +20,8 @@
 
     <string name="tea_size">Size</string>
 
+    <string name="your_order">Your Order:</string>
+
     <string-array name="tea_size_array">
         <item>Select a size...</item>
         <item>Small</item>
