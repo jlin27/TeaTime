@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/activity_tea_detail"
@@ -12,23 +11,22 @@
 
         <LinearLayout
             android:id="@+id/linearLayout1"
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary">
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tea_name_text_view"
                 style="@style/HeaderTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center" />
 
             <ImageView
                 android:id="@+id/tea_image_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
+                android:layout_height="match_parent" />
 
 
         </LinearLayout>
@@ -36,38 +34,38 @@
 
         <TextView
             style="@style/FormTextStyle"
-            android:text="@string/Customizations"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/activity_vertical_margin"
+            android:layout_gravity="bottom"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            android:layout_gravity="bottom"/>
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:text="@string/Customizations" />
 
 
         <LinearLayout
             android:id="@+id/sizeLinearLayout"
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/default_gap"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingBottom="@dimen/default_gap"
             android:paddingTop="@dimen/default_gap">
 
             <TextView
                 android:id="@+id/sizeLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tea_size"/>
+                android:text="@string/tea_size" />
 
             <Spinner
                 android:id="@+id/tea_size_spinner"
                 style="@style/FormTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_alignBaseline="@id/sizeLabel"
+                android:layout_alignParentRight="true"
                 android:layout_toRightOf="@id/sizeLabel"
                 android:drawSelectorOnTop="true" />
 
@@ -75,27 +73,27 @@
 
         <LinearLayout
             android:id="@+id/milkLinearLayout"
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/default_gap"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingBottom="@dimen/default_gap"
             android:paddingTop="@dimen/default_gap">
 
             <TextView
                 android:id="@+id/milkLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/milk_choices"/>
+                android:text="@string/milk_choices" />
 
             <Spinner
                 android:id="@+id/milk_spinner"
                 style="@style/FormTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_alignBaseline="@id/milkLabel"
+                android:layout_alignParentRight="true"
                 android:layout_toRightOf="@id/milkLabel"
                 android:drawSelectorOnTop="true" />
 
@@ -103,27 +101,27 @@
 
         <LinearLayout
             android:id="@+id/sugarLinearLayout"
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/default_gap"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingBottom="@dimen/default_gap"
             android:paddingTop="@dimen/default_gap">
 
             <TextView
                 android:id="@+id/sugarLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sugar_choices"/>
+                android:text="@string/sugar_choices" />
 
             <Spinner
                 android:id="@+id/sugar_spinner"
                 style="@style/FormTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_alignBaseline="@id/sugarLabel"
+                android:layout_alignParentRight="true"
                 android:layout_toRightOf="@id/sugarLabel"
                 android:drawSelectorOnTop="true" />
 
@@ -132,52 +130,52 @@
 
         <LinearLayout
             android:id="@+id/quantityLinearLayout"
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/default_gap"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingBottom="@dimen/default_gap"
             android:paddingTop="@dimen/default_gap">
 
             <TextView
                 android:id="@+id/quantityLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/quantity"/>
+                android:text="@string/quantity" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/decrement_button"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:background="@null"
                     android:onClick="decrement"
-                    android:text="-"
-                    android:background="@null" />
+                    android:text="-" />
 
                 <TextView
                     android:id="@+id/quantity_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
                     android:text="@string/initial_quantity_value"
                     android:textColor="@android:color/black"
-                    android:textSize="16sp"
-                    android:layout_gravity="center"/>
+                    android:textSize="16sp" />
 
                 <Button
                     android:id="@+id/increment_button"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:background="@null"
                     android:onClick="increment"
-                    android:text="+"
-                    android:background="@null" />
+                    android:text="+" />
 
 
             </LinearLayout>
@@ -185,30 +183,29 @@
         </LinearLayout>
 
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/default_gap"
             android:layout_marginTop="@dimen/default_gap"
-            android:layout_marginBottom="@dimen/default_gap">
+            android:orientation="horizontal">
 
             <TextView
-                style="@style/FormTextStyle"
                 android:id="@+id/total"
-                android:gravity="center"
+                style="@style/FormTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/total"/>
+                android:gravity="center"
+                android:text="@string/total" />
 
             <TextView
-                style="@style/FormTextStyle"
                 android:id="@+id/cost_text_view"
-                android:gravity="center"
+                style="@style/FormTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:gravity="center" />
 
         </LinearLayout>
 
@@ -216,9 +213,9 @@
             android:id="@+id/order_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/order"
+            android:layout_gravity="center"
             android:onClick="submitOrder"
-            android:layout_gravity="center"/>
+            android:text="@string/order" />
 
     </LinearLayout>
 

@@ -31,6 +31,8 @@ public class OrderActivityScreenTest {
     // (1) Find View
     // (2) Choose an action to perform
     // (3) Verify outcome of actions with view assertion
+    // TODO don't know a huge amount about espresso, but it seems like this should test if the quantity
+    // was calculated correctly and not just if it's displayed
     @Test
     public void clickDecrementButton_showQuantity() throws Exception{
         // Click on the decrement button

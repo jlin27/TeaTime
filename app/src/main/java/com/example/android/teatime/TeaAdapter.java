@@ -1,3 +1,19 @@
+/*
+* Copyright (C) 2017 The Android Open Source Project
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*  	http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+
 package com.example.android.teatime;
 
 import android.app.Activity;
@@ -22,14 +38,14 @@ public class TeaAdapter extends ArrayAdapter<Tea> {
     private Context context;
     private int layoutResourceId;
     private ArrayList data = new ArrayList();
+    // TODO you don't need to store data here - the array list already is storing the array for you
+    // and updating it when you call things like "Add"
 
     public TeaAdapter(Context context, int layoutResourceId, ArrayList data) {
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.data = data;
-
-
     }
 
     static class ViewHolder {
@@ -62,6 +78,7 @@ public class TeaAdapter extends ArrayAdapter<Tea> {
     }
 
 
+    // TODO seems like you never use any of this, should it all be deleted? What is it for?
     // references to our images
     private Integer[] mThumbIds = {
             R.drawable.sample_2, R.drawable.sample_3,
