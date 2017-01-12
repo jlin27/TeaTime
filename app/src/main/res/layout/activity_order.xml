@@ -18,14 +18,14 @@
             android:background="@color/colorPrimary">
 
             <TextView
-                android:id="@+id/tea_name"
+                android:id="@+id/tea_name_text_view"
                 style="@style/HeaderTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"/>
 
             <ImageView
-                android:id="@+id/tea_image"
+                android:id="@+id/tea_image_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
@@ -204,7 +204,7 @@
 
             <TextView
                 style="@style/FormTextStyle"
-                android:id="@+id/cost"
+                android:id="@+id/cost_text_view"
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
