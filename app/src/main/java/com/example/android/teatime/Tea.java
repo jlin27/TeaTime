@@ -1,5 +1,7 @@
 package com.example.android.teatime;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by jessicalin on 1/3/17.
  */
@@ -7,18 +9,22 @@ package com.example.android.teatime;
 public class Tea {
 
     private String mTeaName;
-    private int mTeaColor;
+    private int mImageResourceId;
+    private Bitmap image;
 
-    public Tea(String teaName, int teaColor) {
+    public Tea(String teaName, int imageResourceId) {
         mTeaName = teaName;
-        mTeaColor = teaColor;
+        mImageResourceId = imageResourceId;
     }
 
     public String getTeaName() {
+
         return mTeaName;
     }
 
-    public int getTeaColor() {
-        return mTeaColor;
+    public int getImageResourceId() {
+        return mImageResourceId;
     }
+
 }
+

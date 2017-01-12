@@ -1,7 +1,10 @@
 package com.example.android.teatime;
 
 import android.content.Intent;
+import android.icu.text.NumberFormat;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
@@ -16,13 +19,13 @@ public class OrderSummaryActivity extends AppCompatActivity {
         String teaName = intent.getStringExtra("teaName");
         int price = intent.getIntExtra("totalPrice",0);
         String size = intent.getStringExtra("size");
-        boolean addMilk = intent.getBooleanExtra("addMilk",false);
-        boolean addSugar = intent.getBooleanExtra("addSugar",false);
+        String milkType = intent.getStringExtra("milkType");
+        String sugarType = intent.getStringExtra("sugarType");
         int quantity = intent.getIntExtra("quantity",0);
 
 
 
-        displayOrderSummary(teaName, price, size, addMilk, addSugar, quantity);
+        displayOrderSummary(teaName, price, size, milkType, sugarType, quantity);
     }
 
     /**
@@ -31,36 +34,45 @@ public class OrderSummaryActivity extends AppCompatActivity {
      * @param teaName          type of tea
      * @param quantity         quantity ordered
      * @param price            price of the order
-     * @param addMilk          is whether or not to add milk to the tea
-     * @param addSugar         is whether or not to add sugar to the tea
+     * @param milkType         type of milk to add
+     * @param sugarType        amount of sugar to add
      * @return text summary
      */
-    private void displayOrderSummary(String teaName, int price, String size, boolean addMilk,
-                                      boolean addSugar, int quantity) {
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void displayOrderSummary(String teaName, int price, String size, String milkType,
+                                     String sugarType, int quantity) {
 
         // Set tea name in order summary
         TextView teaNameTextView = (TextView) findViewById(
                 R.id.summary_tea_name);
         teaNameTextView.setText(teaName);
 
+        // Set quantity in order summary
+        TextView quantityTextView = (TextView) findViewById(
+                R.id.summary_quantity);
+        quantityTextView.setText(String.valueOf(quantity));
+
         // Set tea size in order summary
         TextView sizeTextView = (TextView) findViewById(
                 R.id.summary_tea_size);
         sizeTextView.setText(size);
 
-        // Set milk addition in order summary
-        if(addMilk) {
-            TextView milkTextView = (TextView) findViewById(
-                    R.id.summary_add_milk);
-            milkTextView.setText("@string/add_milk");
-        }
+        // Set milk type in order summary
+        TextView milkTextView = (TextView) findViewById(
+                    R.id.summary_milk_type);
+            milkTextView.setText(milkType);
 
-        // Set sugar addition in order summary
-        if(addSugar){
+        // Set sugar amount in order summary
             TextView sugarTextView = (TextView) findViewById(
-                    R.id.summary_add_sugar);
-            sugarTextView.setText("@string/add_sugar");
-        }
+                    R.id.summary_sugar_amount);
+            sugarTextView.setText(sugarType);
+
+        // Set total price in order summary
+        TextView priceTextView = (TextView) findViewById(
+                R.id.summary_total_price);
+
+        String convertPrice = NumberFormat.getCurrencyInstance().format(price);
+        priceTextView.setText(convertPrice);
 
 
 

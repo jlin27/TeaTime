@@ -5,9 +5,15 @@
     <string name="size_medium">Medium</string>
     <string name="size_large">Large</string>
 
-    <string name="add_milk">Add Milk ($1/cup)</string>
+    <string name="milk_choices">Milk Choices</string>
+    <string name="milk_none">None</string>
+    <string name="milk_nonfat">Nonfat Milk</string>
+    <string name="milk_1">1% Milk</string>
+    <string name="milk_2">2% Milk</string>
+    <string name="milk_whole">Whole Milk</string>
 
-    <string name="add_sugar">Add Sugar($1/cup)</string>
+
+    <string name="sugar_choices">Sugar Choices</string>
 
     <string name="quantity">Quantity</string>
 
@@ -21,11 +27,35 @@
     <string name="tea_size">Size</string>
 
     <string name="your_order">Your Order:</string>
+    <string name="menu">MENU</string>
+    <string name="Customizations">Customizations</string>
+    <string name="total">Total</string>
+    <string name="summary_size_label">Size</string>
+    <string name="summary_milk_label">Milk Type</string>
+    <string name="summary_sugar_label">Sugar Amount</string>
+    <string name="summary_total_label">Order Total</string>
+    <string name="summary_quantity_label">Quantity</string>
 
     <string-array name="tea_size_array">
-        <item>Select a size...</item>
         <item>Small</item>
         <item>Medium</item>
         <item>Large</item>
+    </string-array>
+
+    <string-array name="milk_array">
+        <item>None</item>
+        <item>Nonfat Milk</item>
+        <item>1% Milk</item>
+        <item>2% Milk</item>
+        <item>Whole Milk</item>
+        <item>Nonfat Milk</item>
+    </string-array>
+
+    <string-array name="sugar_array">
+        <item>0% - Not Sweet</item>
+        <item>25% - Slightly Sweet</item>
+        <item>50% - Half Sweet</item>
+        <item>75% - Moderately Sweet</item>
+        <item>100% - Full Sweetness</item>
     </string-array>
 </resources>

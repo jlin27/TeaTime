@@ -2,13 +2,15 @@ package com.example.android.teatime;
 
 import android.content.Intent;
 import android.icu.text.NumberFormat;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -16,12 +18,13 @@ public class OrderActivity extends AppCompatActivity {
 
     int quantity = 0;
     int totalPrice = 0;
-    int basePrice = 5; // Small tea price with no additions
-    int medAddPrice = 1; // Additional price over basePrice for medium tea price with no additions
-    int largeAddPrice = 2; // Additional price over basePrice for large tea price with no additions
-    boolean addMilk = false;
-    boolean addSugar = false;
+    int smallPrice = 5;
+    int medPrice = 6;
+    int largePrice = 7;
+    String milkType;
+    String sugarType;
     String teaName ="";
+    int teaImage;
     String size;
 
     @Override
@@ -29,25 +32,34 @@ public class OrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
-        // Set header name depending on which item was clicked in the gridView
+        // Set header name and image depending on which item was clicked in the gridView
         Intent intent = getIntent();
         teaName = intent.getStringExtra("teaName");
+        teaImage = intent.getIntExtra("teaImage",0);
+
         TextView teaNameTextView = (TextView) findViewById(R.id.tea_name);
         teaNameTextView.setText(teaName);
+
+
+        ImageView teaImageView = (ImageView) findViewById(R.id.tea_image);
+        teaImageView.setImageResource(teaImage);
+
 
         // Set cost default to $0.00
         TextView costTextView = (TextView) findViewById(
                 R.id.cost);
         costTextView.setText("$0.00");
 
-        setupSpinner();
+        setupSizeSpinner();
+        setupMilkSpinner();
+        setupSugarSpinner();
 
     }
 
     /**
      * Setup the dropdown spinner for user to select tea size
      */
-    private void setupSpinner() {
+    private void setupSizeSpinner() {
 
 
         Spinner mSizeSpinner = (Spinner) findViewById(R.id.tea_size_spinner);
@@ -92,6 +104,109 @@ public class OrderActivity extends AppCompatActivity {
 
 
     /**
+     * Setup the dropdown spinner for user to select milk type
+     */
+    private void setupMilkSpinner() {
+
+
+        Spinner mSizeSpinner = (Spinner) findViewById(R.id.milk_spinner);
+
+        // Create an ArrayAdapter using the string array and a default mSizeSpinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.milk_array, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the mSizeSpinner
+        mSizeSpinner.setAdapter(adapter);
+
+        // Set the integer mSelected to the constant values
+        mSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selection = (String) parent.getItemAtPosition(position);
+                if (!TextUtils.isEmpty(selection)) {
+                    if (selection.equals("None")) {
+                        milkType = "None";
+                    } else if (selection.equals("Nonfat Milk")) {
+                        milkType = "Nonfat Milk";
+                    } else if (selection.equals("1% Milk")) {
+                        milkType = "1% Milk";
+                    } else if (selection.equals("2% Milk")) {
+                        milkType = "2% Milk";
+                    } else {
+                        milkType = "Whole Milk";
+
+                    }
+                }
+            }
+
+            // Because AdapterView is an abstract class, onNothingSelected must be defined
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                return;
+                /**
+                 * Need to add code that prevents user from moving forward if not selected
+                 */
+            }
+        });
+
+    }
+
+
+    /**
+     * Setup the dropdown spinner for user to select amount of sugar
+     */
+    private void setupSugarSpinner() {
+
+
+        Spinner mSizeSpinner = (Spinner) findViewById(R.id.sugar_spinner);
+
+        // Create an ArrayAdapter using the string array and a default mSizeSpinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.sugar_array, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the mSizeSpinner
+        mSizeSpinner.setAdapter(adapter);
+
+        // Set the integer mSelected to the constant values
+        mSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selection = (String) parent.getItemAtPosition(position);
+                if (!TextUtils.isEmpty(selection)) {
+                    if (selection.equals("0% - Not Sweet")) {
+                        sugarType = "0% - Not Sweet";
+                    } else if (selection.equals("25% - Slightly Sweet")) {
+                        milkType = "25% - Slightly Sweet";
+                    } else if (selection.equals("50% - Half Sweet")) {
+                        milkType = "50% - Half Swee";
+                    } else if (selection.equals("75% - Moderately Sweet")) {
+                        milkType = "75% - Moderately Sweet";
+                    } else {
+                        milkType = "100% - Full Sweetness";
+
+                    }
+                }
+            }
+
+            // Because AdapterView is an abstract class, onNothingSelected must be defined
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                return;
+                /**
+                 * Need to add code that prevents user from moving forward if not selected
+                 */
+            }
+        });
+
+    }
+
+    /**
      * This method is called when the plus button is clicked.
      */
     public void increment(View view) {
@@ -113,23 +228,6 @@ public class OrderActivity extends AppCompatActivity {
         displayCost(totalPrice);
     }
 
-    /**
-     * Recalculate cost depending on whether or not milk checkbox is clicked.
-     */
-    public void checkMilk(View view) {
-
-        totalPrice = calculatePrice();
-        displayCost(totalPrice);
-    }
-
-    /**
-     * Recalculate cost depending on whether or not sugar checkbox is clicked.
-     */
-    public void checkSugar(View view) {
-
-        totalPrice = calculatePrice();
-        displayCost(totalPrice);
-    }
 
     /**
      * Calculates the totalPrice of the order.
@@ -138,32 +236,13 @@ public class OrderActivity extends AppCompatActivity {
      */
     private int calculatePrice() {
 
-        // Figure out if the user wants milk
-        CheckBox milkCheckBox = (CheckBox) findViewById(R.id.milkCheckBox);
-        addMilk = milkCheckBox.isChecked();
-
-        // Figure out if the user wants sugar
-        CheckBox sugarCheckBox = (CheckBox) findViewById(R.id.sugarCheckBox);
-        addSugar = sugarCheckBox.isChecked();
-
-
         // Determine tea size price
         if (size.equals("Small")) {
-            totalPrice = quantity * basePrice;
+            totalPrice = quantity * smallPrice;
         } else if (size.equals("Medium")) {
-            totalPrice = quantity * (basePrice + medAddPrice);
+            totalPrice = quantity * medPrice;
         } else {
-            totalPrice = quantity * (basePrice + largeAddPrice);
-        }
-
-        // If the user wants milk, add $1 per cup
-        if (addMilk) {
-            totalPrice += quantity * 1;
-        }
-
-        // If the user wants sugar, add $1 per cup
-        if (addSugar) {
-            totalPrice += quantity *  1;
+            totalPrice = quantity * largePrice;
         }
 
         // Calculate the total order totalPrice by multiplying by the quantity
@@ -181,6 +260,7 @@ public class OrderActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void displayCost(int totalPrice){
         TextView costTextView = (TextView) findViewById(
                 R.id.cost);
@@ -201,8 +281,8 @@ public class OrderActivity extends AppCompatActivity {
         intent.putExtra("totalPrice",totalPrice);
         intent.putExtra("teaName",teaName);
         intent.putExtra("size",size);
-        intent.putExtra("addMilk",addMilk);
-        intent.putExtra("addSugar",addSugar);
+        intent.putExtra("milkType",milkType);
+        intent.putExtra("sugarType",sugarType);
         intent.putExtra("quantity",quantity);
 
         if (intent.resolveActivity(getPackageManager()) != null) {
