@@ -28,7 +28,7 @@ public class Tea {
     private int mImageResourceId;
     private Bitmap mImage; // TODO I'm confused about what this is, also changed name to be mImage
 
-    public Tea(String teaName, int imageResourceId) {
+    public Tea(int teaName, int imageResourceId) {
         mTeaName = teaName;
         mImageResourceId = imageResourceId;
     }

@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 public class OrderSummaryActivity extends AppCompatActivity {
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

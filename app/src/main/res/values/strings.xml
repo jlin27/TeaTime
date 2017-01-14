@@ -1,10 +1,20 @@
 <resources>
     <string name="app_name">TeaTime</string>
 
+    <!--Tea Names-->
+    <string name="black_tea_name">Black Tea</string>
+    <string name="green_tea_name">Green Tea</string>
+    <string name="white_tea_name">White Tea</string>
+    <string name="oolong_tea_name">Oolong Tea</string>
+    <string name="puerh_tea_name">Pu-erh Tea</string>
+    <string name="matcha_tea_name">Matcha Tea</string>
+
+    <!--Tea Sizes-->
     <string name="size_small">Small</string>
     <string name="size_medium">Medium</string>
     <string name="size_large">Large</string>
 
+    <!--Milk Choices-->
     <string name="milk_choices">Milk Choices</string>
     <string name="milk_none">None</string>
     <string name="milk_nonfat">Nonfat Milk</string>
@@ -21,12 +31,11 @@
 
     <string name="cost">$5.00</string>
 
-    <!-- Hint text display in the empty field for the user's name [CHAR LIMIT=5] -->
     <string name="initial_quantity_value">0</string>
 
     <string name="tea_size">Size</string>
 
-    <string name="your_order">Your Order:</string>
+
     <string name="menu">MENU</string>
     <string name="Customizations">Customizations</string>
     <string name="total">Total</string>
@@ -35,6 +44,9 @@
     <string name="summary_sugar_label">Sugar Amount</string>
     <string name="summary_total_label">Order Total</string>
     <string name="summary_quantity_label">Quantity</string>
+
+    <string name="EXTRA_TEA_NAME">com.example.android.teatime.extra.TEA_NAME</string>
+
 
     <string-array name="tea_size_array">
         <item>Small</item>
@@ -48,7 +60,6 @@
         <item>1% Milk</item>
         <item>2% Milk</item>
         <item>Whole Milk</item>
-        <item>Nonfat Milk</item>
     </string-array>
 
     <string-array name="sugar_array">

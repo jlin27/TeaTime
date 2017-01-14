@@ -22,7 +22,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -36,13 +35,14 @@ public class OrderActivity extends AppCompatActivity {
     private int mQuantity = 0;
     private int mTotalPrice = 0;
 
-    // TODO should these be constants? Do they change?
-    private int mSmallPrice = 5;
-    private int mMedPrice = 6;
-    private int mLargePrice = 7;
+    private static final int SMALL_PRICE = 5;
+    private  static final  int MED_PRICE = 6;
+    private static final  int LARGE_PRICE = 7;
+
     private String mMilkType;
     private String mSugarType;
     private String mTeaName = "";
+
     private int mTeaImage;
     private String mSize;
 
@@ -53,7 +53,7 @@ public class OrderActivity extends AppCompatActivity {
 
         // Set header name and image depending on which item was clicked in the gridView
         Intent intent = getIntent();
-        mTeaName = intent.getStringExtra("teaName"); // TODO these keys should be constants
+        mTeaName = intent.getStringExtra(String.valueOf(R.string.EXTRA_TEA_NAME)); // TODO these keys should be constants
         mTeaImage = intent.getIntExtra("teaImage", 0);
 
         TextView teaNameTextView = (TextView) findViewById(R.id.tea_name_text_view);
@@ -96,19 +96,19 @@ public class OrderActivity extends AppCompatActivity {
         mSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selection = (String) parent.getItemAtPosition(position);
-                if (!TextUtils.isEmpty(selection)) {
-                    if (selection.equals(getString(
-                            R.string.size_small))) { //TODO this can be a switch, also the
-                        // strings should be constants
+                switch(position) {
+                    case 0:
                         mSize = "Small";
-                    } else if (selection.equals(getString(R.string.size_medium))) {
+                        break;
+                    case 1:
                         mSize = "Medium";
-                    } else {
+                        break;
+                    case 2:
                         mSize = "Large";
+                        break;
+
                     }
                 }
-            }
 
             // Because AdapterView is an abstract class, onNothingSelected must be defined
             @Override
@@ -143,24 +143,25 @@ public class OrderActivity extends AppCompatActivity {
         mSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selection = (String) parent.getItemAtPosition(position);
-                if (!TextUtils.isEmpty(selection)) {
-                    if (selection.equals(
-                            "None")) { // TODO should all be strings, and probably in a
-                        // case/switch...also why not just set milktype to the selection?
+                switch(position) {
+                    case 0:
                         mMilkType = "None";
-                    } else if (selection.equals("Nonfat Milk")) {
+                        break;
+                    case 1:
                         mMilkType = "Nonfat Milk";
-                    } else if (selection.equals("1% Milk")) {
+                        break;
+                    case 2:
                         mMilkType = "1% Milk";
-                    } else if (selection.equals("2% Milk")) {
+                        break;
+                    case 3:
                         mMilkType = "2% Milk";
-                    } else {
+                        break;
+                    case 4:
                         mMilkType = "Whole Milk";
-
-                    }
+                        break;
                 }
             }
+
 
             // Because AdapterView is an abstract class, onNothingSelected must be defined
             @Override
@@ -197,20 +198,22 @@ public class OrderActivity extends AppCompatActivity {
         mSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selection = (String) parent.getItemAtPosition(position);
-                if (!TextUtils.isEmpty(selection)) { // TODO same questions as above
-                    if (selection.equals("0% - Not Sweet")) {
+                switch(position) {
+                    case 0:
                         mSugarType = "0% - Not Sweet";
-                    } else if (selection.equals("25% - Slightly Sweet")) {
+                        break;
+                    case 1:
                         mMilkType = "25% - Slightly Sweet";
-                    } else if (selection.equals("50% - Half Sweet")) {
-                        mMilkType = "50% - Half Swee";
-                    } else if (selection.equals("75% - Moderately Sweet")) {
+                        break;
+                    case 2:
+                        mMilkType = "50% - Half Sweet";
+                        break;
+                    case 3:
                         mMilkType = "75% - Moderately Sweet";
-                    } else {
+                        break;
+                    case 4:
                         mMilkType = "100% - Full Sweetness";
-
-                    }
+                        break;
                 }
             }
 
@@ -229,6 +232,7 @@ public class OrderActivity extends AppCompatActivity {
     /**
      * Increments the quantity and recalculates the price
      */
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void increment(View view) {
 
         mQuantity = mQuantity + 1;
@@ -240,6 +244,7 @@ public class OrderActivity extends AppCompatActivity {
     /**
      * Decrements the quantity and recalculates the price
      */
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void decrement(View view) {
 
         mQuantity = mQuantity - 1;
@@ -258,11 +263,11 @@ public class OrderActivity extends AppCompatActivity {
 
         // Determine tea size price
         if (mSize.equals("Small")) {
-            mTotalPrice = mQuantity * mSmallPrice;
+            mTotalPrice = mQuantity * SMALL_PRICE;
         } else if (mSize.equals("Medium")) {
-            mTotalPrice = mQuantity * mMedPrice;
+            mTotalPrice = mQuantity * MED_PRICE;
         } else {
-            mTotalPrice = mQuantity * mLargePrice;
+            mTotalPrice = mQuantity * LARGE_PRICE;
         }
 
         // Calculate the total order mTotalPrice by multiplying by the mQuantity
@@ -292,11 +297,12 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     /**
-     * This method is called when the order button is clicked. //TODO fix comment phrasing
+     * This method is called when the order button is clicked
+     * and a new intent opens the the {@link OrderSummaryActivity}
      */
     public void submitOrder(View view) {
 
-        // Create a new intent to open the {@link OrderSummaryActvitiy}
+        // Create a new intent to open the {@link OrderSummaryActivity}
         Intent intent = new Intent(OrderActivity.this, OrderSummaryActivity.class);
         intent.putExtra("totalPrice", mTotalPrice);
         intent.putExtra("teaName", mTeaName);
