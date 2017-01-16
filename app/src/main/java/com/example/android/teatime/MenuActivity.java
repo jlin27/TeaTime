@@ -23,9 +23,11 @@ import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.example.android.teatime.IdlingResource.SimpleIdlingResource;
 import com.example.android.teatime.model.Tea;
@@ -34,6 +36,8 @@ import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity implements ImageDelayer.DelayerCallback {
 
+    // The TextView used to display the loading message inside the Activity.
+    private TextView mTextView;
 
     Intent teaIntent;
 
@@ -44,6 +48,8 @@ public class MenuActivity extends AppCompatActivity implements ImageDelayer.Dela
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        mTextView = (TextView) findViewById(R.id.loading_msg);
 
         // Create an arraylist of teas
         final ArrayList<Tea> teas = new ArrayList<>();
@@ -60,6 +66,8 @@ public class MenuActivity extends AppCompatActivity implements ImageDelayer.Dela
         TeaAdapter adapter = new TeaAdapter(this, R.layout.grid_item_layout);
         gridview.setAdapter(adapter);
 
+        Log.v("MenuActivity", "adapter has been set");
+
 
         // Set a click listener on that View
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -70,11 +78,20 @@ public class MenuActivity extends AppCompatActivity implements ImageDelayer.Dela
                 // Set the intent to open the {@link TeaDetailActivity}
                 teaIntent = new Intent(MenuActivity.this, OrderActivity.class);
 
-                // Start the new activity
+                // The delayer notifies the activity via a callback
+                // Pass in the tea name to be displayed in the detail activity
+                int teaName = item.getTeaName();
+                int teaImage = item.getImageResourceId();
+
+                teaIntent.putExtra("teaName", teaName); //TODO: Make keys into constants
+                teaIntent.putExtra("teaImage", teaImage);
+
                 if (teaIntent.resolveActivity(getPackageManager()) != null) {
+                    // Set a temporary delay message
+                    mTextView.setText(R.string.loading_msg);
 
                     // Submit the image to the delayer
-                    ImageDelayer.processImage(teaImage, this, mIdlingResource);
+                    ImageDelayer.processImage(teaImage, MenuActivity.this, mIdlingResource);
                 }
             }
         });
@@ -84,13 +101,8 @@ public class MenuActivity extends AppCompatActivity implements ImageDelayer.Dela
 
     @Override
     public void onDone(int image) {
-        // The delayer notifies the activity via a callback
-        // Pass in the tea name to be displayed in the detail activity
-        String teaName = item.getTeaName().toString();
-        int teaImage = item.getImageResourceId();
-        
-        teaIntent.putExtra("teaName", teaName); //TODO: Make keys into constants
-        teaIntent.putExtra("teaImage", teaImage);
+
+        // The delayer starts the activity via a callback.
         startActivity(teaIntent);
     }
 

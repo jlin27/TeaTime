@@ -16,24 +16,21 @@
 
 package com.example.android.teatime.model;
 
-import android.graphics.Bitmap;
-
 /**
  * Created by jessicalin on 1/3/17.
  */
 
 public class Tea {
 
-    private String mTeaName;
+    private int mTeaName;
     private int mImageResourceId;
-    private Bitmap mImage; // TODO I'm confused about what this is, also changed name to be mImage
 
     public Tea(int teaName, int imageResourceId) {
         mTeaName = teaName;
         mImageResourceId = imageResourceId;
     }
 
-    public String getTeaName() {
+    public int getTeaName() {
 
         return mTeaName;
     }
