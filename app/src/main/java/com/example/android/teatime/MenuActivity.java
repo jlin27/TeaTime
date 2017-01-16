@@ -16,6 +16,7 @@
 
 package com.example.android.teatime;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,7 +28,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.teatime.IdlingResource.SimpleIdlingResource;
 import com.example.android.teatime.model.Tea;
@@ -36,8 +37,6 @@ import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity implements ImageDelayer.DelayerCallback {
 
-    // The TextView used to display the loading message inside the Activity.
-    private TextView mTextView;
 
     Intent teaIntent;
 
@@ -49,21 +48,20 @@ public class MenuActivity extends AppCompatActivity implements ImageDelayer.Dela
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        mTextView = (TextView) findViewById(R.id.loading_msg);
 
         // Create an arraylist of teas
         final ArrayList<Tea> teas = new ArrayList<>();
-        teas.add(new Tea(R.string.black_tea_name, R.drawable.black_tea));
-        teas.add(new Tea(R.string.green_tea_name, R.drawable.green_tea));
-        teas.add(new Tea(R.string.white_tea_name, R.drawable.white_tea));
-        teas.add(new Tea(R.string.oolong_tea_name, R.drawable.oolong_tea));
-        teas.add(new Tea(R.string.puerh_tea_name, R.drawable.puerh_tea));
-        teas.add(new Tea(R.string.matcha_tea_name, R.drawable.sample_5));
+        teas.add(new Tea(getString(R.string.black_tea_name), R.drawable.black_tea));
+        teas.add(new Tea(getString(R.string.green_tea_name), R.drawable.green_tea));
+        teas.add(new Tea(getString(R.string.white_tea_name), R.drawable.white_tea));
+        teas.add(new Tea(getString(R.string.oolong_tea_name), R.drawable.oolong_tea));
+        teas.add(new Tea(getString(R.string.puerh_tea_name), R.drawable.puerh_tea));
+        teas.add(new Tea(getString(R.string.matcha_tea_name), R.drawable.sample_5));
 
         // Create a {@link TeaAdapter}, whose data source is a list of {@link Tea}s.
         // The adapter know how to create grid items for each item in the list.
         GridView gridview = (GridView) findViewById(R.id.gridView);
-        TeaAdapter adapter = new TeaAdapter(this, R.layout.grid_item_layout);
+        TeaAdapter adapter = new TeaAdapter(this, R.layout.grid_item_layout, teas);
         gridview.setAdapter(adapter);
 
         Log.v("MenuActivity", "adapter has been set");
@@ -80,15 +78,21 @@ public class MenuActivity extends AppCompatActivity implements ImageDelayer.Dela
 
                 // The delayer notifies the activity via a callback
                 // Pass in the tea name to be displayed in the detail activity
-                int teaName = item.getTeaName();
+                String teaName = item.getTeaName();
                 int teaImage = item.getImageResourceId();
 
                 teaIntent.putExtra("teaName", teaName); //TODO: Make keys into constants
                 teaIntent.putExtra("teaImage", teaImage);
 
                 if (teaIntent.resolveActivity(getPackageManager()) != null) {
-                    // Set a temporary delay message
-                    mTextView.setText(R.string.loading_msg);
+                    // Set a temporary delay toast message
+                    Context context = getApplicationContext();
+                    String text = getString(R.string.loading_msg);
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+
 
                     // Submit the image to the delayer
                     ImageDelayer.processImage(teaImage, MenuActivity.this, mIdlingResource);

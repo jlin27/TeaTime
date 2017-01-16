@@ -47,7 +47,7 @@
 
     <string name="EXTRA_TEA_NAME">com.example.android.teatime.extra.TEA_NAME</string>
 
-    <string name="loading_msg">Loading Images...</string>
+    <string name="loading_msg">Loading details page...</string>
 
 
     <string-array name="tea_size_array">

@@ -22,15 +22,15 @@ package com.example.android.teatime.model;
 
 public class Tea {
 
-    private int mTeaName;
+    private String mTeaName;
     private int mImageResourceId;
 
-    public Tea(int teaName, int imageResourceId) {
+    public Tea(String teaName, int imageResourceId) {
         mTeaName = teaName;
         mImageResourceId = imageResourceId;
     }
 
-    public int getTeaName() {
+    public String getTeaName() {
 
         return mTeaName;
     }

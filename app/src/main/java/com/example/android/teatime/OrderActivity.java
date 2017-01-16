@@ -53,7 +53,7 @@ public class OrderActivity extends AppCompatActivity {
 
         // Set header name and image depending on which item was clicked in the gridView
         Intent intent = getIntent();
-        mTeaName = intent.getStringExtra(String.valueOf(R.string.EXTRA_TEA_NAME)); // TODO these keys should be constants
+        mTeaName = intent.getStringExtra("teaName"); // TODO these keys should be constants
         mTeaImage = intent.getIntExtra("teaImage", 0);
 
         TextView teaNameTextView = (TextView) findViewById(R.id.tea_name_text_view);

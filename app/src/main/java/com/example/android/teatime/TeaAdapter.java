@@ -27,6 +27,8 @@ import android.widget.TextView;
 
 import com.example.android.teatime.model.Tea;
 
+import java.util.ArrayList;
+
 /**
  * Created by jessicalin on 1/3/17.
  */
@@ -35,11 +37,13 @@ public class TeaAdapter extends ArrayAdapter<Tea> {
 
     private Context context;
     private int layoutResourceId;
+    private ArrayList data = new ArrayList();
 
-    public TeaAdapter(Context context, int layoutResourceId) {
-        super(context, layoutResourceId);
+    public TeaAdapter(Context context, int layoutResourceId,  ArrayList data) {
+        super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
+        this.data = data;
     }
 
     static class ViewHolder {

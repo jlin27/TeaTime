@@ -14,13 +14,6 @@
         android:gravity="center"
         android:text="@string/menu" />
 
-    <TextView
-        android:id="@+id/loading_msg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_below="@id/menu_title"
-        android:text="@string/loading_msg" />
 
     <GridView
         android:id="@+id/gridView"
