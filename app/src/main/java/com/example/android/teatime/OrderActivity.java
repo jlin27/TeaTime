@@ -25,7 +25,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -43,7 +42,6 @@ public class OrderActivity extends AppCompatActivity {
     private String mSugarType;
     private String mTeaName = "";
 
-    private int mTeaImage;
     private String mSize;
 
     @Override
@@ -54,14 +52,9 @@ public class OrderActivity extends AppCompatActivity {
         // Set header name and image depending on which item was clicked in the gridView
         Intent intent = getIntent();
         mTeaName = intent.getStringExtra("teaName"); // TODO these keys should be constants
-        mTeaImage = intent.getIntExtra("teaImage", 0);
 
         TextView teaNameTextView = (TextView) findViewById(R.id.tea_name_text_view);
         teaNameTextView.setText(mTeaName);
-
-
-        ImageView teaImageView = (ImageView) findViewById(R.id.tea_image_view);
-        teaImageView.setImageResource(mTeaImage);
 
 
         // Set cost default to $0.00

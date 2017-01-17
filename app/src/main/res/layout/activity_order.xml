@@ -23,11 +23,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
 
-            <ImageView
-                android:id="@+id/tea_image_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
 
         </LinearLayout>
 
@@ -71,6 +66,8 @@
 
         </LinearLayout>
 
+        <View style="@style/Divider"/>
+
         <LinearLayout
             android:id="@+id/milkLinearLayout"
             android:layout_width="match_parent"
@@ -98,6 +95,8 @@
                 android:drawSelectorOnTop="true" />
 
         </LinearLayout>
+
+        <View style="@style/Divider"/>
 
         <LinearLayout
             android:id="@+id/sugarLinearLayout"
@@ -127,6 +126,7 @@
 
         </LinearLayout>
 
+        <View style="@style/Divider"/>
 
         <LinearLayout
             android:id="@+id/quantityLinearLayout"
@@ -152,10 +152,11 @@
 
                 <Button
                     android:id="@+id/decrement_button"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:background="@null"
                     android:onClick="decrement"
+                    android:textSize="18sp"
                     android:text="-" />
 
                 <TextView
@@ -167,21 +168,21 @@
                     android:paddingRight="8dp"
                     android:text="@string/initial_quantity_value"
                     android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    android:textSize="22sp" />
 
                 <Button
                     android:id="@+id/increment_button"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:background="@null"
                     android:onClick="increment"
+                    android:textSize="22sp"
                     android:text="+" />
 
 
             </LinearLayout>
 
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -211,7 +212,7 @@
 
         <Button
             android:id="@+id/order_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:onClick="submitOrder"

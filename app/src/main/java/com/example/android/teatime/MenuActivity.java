@@ -82,7 +82,6 @@ public class MenuActivity extends AppCompatActivity implements ImageDelayer.Dela
                 int teaImage = item.getImageResourceId();
 
                 teaIntent.putExtra("teaName", teaName); //TODO: Make keys into constants
-                teaIntent.putExtra("teaImage", teaImage);
 
                 if (teaIntent.resolveActivity(getPackageManager()) != null) {
                     // Set a temporary delay toast message
