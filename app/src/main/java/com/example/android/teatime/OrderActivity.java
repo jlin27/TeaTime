@@ -240,7 +240,9 @@ public class OrderActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void decrement(View view) {
 
-        mQuantity = mQuantity - 1;
+        if(mQuantity>0) {
+            mQuantity = mQuantity - 1;
+        }
         displayQuantity(mQuantity);
         mTotalPrice = calculatePrice();
         displayCost(mTotalPrice);

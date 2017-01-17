@@ -19,14 +19,15 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.anything;
 
 /**
  * Usually Espresso syncs all view operations with the UI thread as well as AsyncTasks, but it can't
@@ -34,12 +35,14 @@ import static org.hamcrest.Matchers.allOf;
  * custom resource and Espresso will wait for the resource to be idle before
  * executing a view operation.
  *
- * In this example, we simulate an idling situation.
+ * In this example, we simulate an idling situation. This test is the same as the
+ * MenuActivityScreenTest but with an Idling Resource to help with synchronization.
+ *
  * We added an idling period from when the user clicks on a GridView item
  * in MenuActivity to when corresponding order activity appears. This is to simulate potential
  * delay that could happen if this data were being retrieved from the web. Without registering the
  * custom resources, this test would fail because the test would proceed without waiting
- * for te idling resource.
+ * for the Idling Resource.
  */
 
 
@@ -60,13 +63,8 @@ public class IdlingResourceTest {
 
     @Test
     public void idlingResourceTest() {
-        ViewInteraction linearLayout = onView(
-                allOf(childAtPosition(
-                        allOf(withId(R.id.gridView),
-                                withParent(withId(R.id.activity_main))),
-                        1),
-                        isDisplayed()));
-        linearLayout.perform(click());
+
+        onData(anything()).inAdapterView(withId(R.id.gridView)).atPosition(1).perform(click());
 
         ViewInteraction textView = onView(
                 allOf(withId(R.id.tea_name_text_view), withText("Green Tea"),

@@ -15,47 +15,37 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.anything;
-
-/**
- * This test demos a user clicking on a GridView item in MenuActivity which opens up the
- * correspoding OrderActivity.
- *
- * This test does not utilize Idling Resources yet. For that, see the IdlingResourcesTest.
- * for the Idling Resource.
- */
-
 
 @RunWith(AndroidJUnit4.class)
-public class MenuActivityScreenTest {
+public class OrderActivityQuantityTest {
 
     @Rule
-    public ActivityTestRule<MenuActivity> mActivityTestRule = new ActivityTestRule<>(MenuActivity.class);
-
+    public ActivityTestRule<OrderActivity> mActivityTestRule = new ActivityTestRule<>(OrderActivity.class);
 
     @Test
-    public void MenuActivityScreenTest3() {
+    public void orderActivityQuantityTest() {
 
-        onData(anything()).inAdapterView(withId(R.id.gridView)).atPosition(1).perform(click());
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(R.id.decrement_button), withText("-")));
+        appCompatButton.perform(scrollTo(), click());
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.tea_name_text_view), withText("Green Tea"),
+                allOf(withId(R.id.quantity_text_view), withText("0"),
                         childAtPosition(
-                                allOf(withId(R.id.activity_tea_detail_header),
-                                        childAtPosition(
-                                                withId(R.id.activity_tea_detail),
-                                                0)),
-                                0),
+                                childAtPosition(
+                                        withId(R.id.quantityLinearLayout),
+                                        1),
+                                1),
                         isDisplayed()));
-        textView.check(matches(withText("Green Tea")));
+        textView.check(matches(withText("0")));
 
     }
 
@@ -77,5 +67,4 @@ public class MenuActivityScreenTest {
             }
         };
     }
-
 }
