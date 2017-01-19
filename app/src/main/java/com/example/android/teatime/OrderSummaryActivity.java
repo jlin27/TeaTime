@@ -21,6 +21,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 public class OrderSummaryActivity extends AppCompatActivity {
@@ -30,14 +31,17 @@ public class OrderSummaryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_summary);
+        Toolbar menuToolbar = (Toolbar) findViewById(R.id.order_summary_toolbar);
+        setSupportActionBar(menuToolbar);
+        getSupportActionBar().setTitle(getString(R.string.order_summary_title));
 
         Intent intent = getIntent();
-        String teaName = intent.getStringExtra("teaName");
-        int price = intent.getIntExtra("totalPrice",0);
-        String size = intent.getStringExtra("size");
-        String milkType = intent.getStringExtra("milkType");
-        String sugarType = intent.getStringExtra("sugarType");
-        int quantity = intent.getIntExtra("quantity",0);
+        String teaName = intent.getStringExtra(OrderActivity.EXTRA_TEA_NAME);
+        int price = intent.getIntExtra(OrderActivity.EXTRA_TOTAL_PRICE,0);
+        String size = intent.getStringExtra(OrderActivity.EXTRA_SIZE);
+        String milkType = intent.getStringExtra(OrderActivity.EXTRA_MILK_TYPE);
+        String sugarType = intent.getStringExtra(OrderActivity.EXTRA_SUGAR_TYPE);
+        int quantity = intent.getIntExtra(OrderActivity.EXTRA_QUANTITY,0);
 
         displayOrderSummary(teaName, price, size, milkType, sugarType, quantity);
     }

@@ -1,42 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_order_summary"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.android.teatime.OrderSummaryActivity">
+    android:orientation="vertical">
+
+<android.support.v7.widget.Toolbar
+    android:id="@+id/order_summary_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="?attr/colorPrimary"
+    android:elevation="4dp"
+    android:theme="@style/ToolbarTheme"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
 
-    <TextView
-        android:id="@+id/summary_tea_name"
-        style="@style/FormTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+<LinearLayout
+      android:id="@+id/activity_order_summary"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:paddingBottom="@dimen/activity_vertical_margin"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:paddingTop="@dimen/activity_vertical_margin">
+
+<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+
+        <TextView
+            android:id="@+id/summary_tea_name"
+            style="@style/FormTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/summary_quantity_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="@string/summary_quantity_label"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/summary_quantity_label"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="@string/summary_quantity_label"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/summary_quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="right" />
+    <TextView
+        android:id="@+id/summary_quantity"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -46,6 +74,7 @@
 
         <TextView
             android:id="@+id/summary_size_label"
+            android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -54,6 +83,7 @@
 
         <TextView
             android:id="@+id/summary_tea_size"
+            android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -68,6 +98,7 @@
 
         <TextView
             android:id="@+id/summary_milk_label"
+            android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -76,6 +107,7 @@
 
         <TextView
             android:id="@+id/summary_milk_type"
+            android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -90,6 +122,7 @@
 
         <TextView
             android:id="@+id/summary_sugar_label"
+            android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -98,6 +131,7 @@
 
         <TextView
             android:id="@+id/summary_sugar_amount"
+            android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -127,4 +161,7 @@
             android:layout_alignParentRight="true"
             android:layout_gravity="right" />
     </RelativeLayout>
+
+</LinearLayout>
+
 </LinearLayout>

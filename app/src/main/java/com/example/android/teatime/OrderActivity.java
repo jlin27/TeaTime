@@ -22,6 +22,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -44,14 +45,24 @@ public class OrderActivity extends AppCompatActivity {
 
     private String mSize;
 
+    public final static String EXTRA_TOTAL_PRICE = "com.example.android.teatime.EXTRA_TOTAL_PRICE";
+    public final static String EXTRA_TEA_NAME = "com.example.android.teatime.EXTRA_TEA_NAME";
+    public final static String EXTRA_SIZE = "com.example.android.teatime.EXTRA_SIZE";
+    public final static String EXTRA_MILK_TYPE = "com.example.android.teatime.EXTRA_MILK_TYPE";
+    public final static String EXTRA_SUGAR_TYPE= "com.example.android.teatime.EXTRA_SUGAR_TYPE";
+    public final static String EXTRA_QUANTITY= "com.example.android.teatime.EXTRA_QUANTITY";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
+        Toolbar menuToolbar = (Toolbar) findViewById(R.id.order_toolbar);
+        setSupportActionBar(menuToolbar);
+        getSupportActionBar().setTitle(getString(R.string.order_title));
 
         // Set header name and image depending on which item was clicked in the gridView
         Intent intent = getIntent();
-        mTeaName = intent.getStringExtra("teaName"); // TODO these keys should be constants
+        mTeaName = intent.getStringExtra(MenuActivity.EXTRA_TEA_NAME);
 
         TextView teaNameTextView = (TextView) findViewById(R.id.tea_name_text_view);
         teaNameTextView.setText(mTeaName);
@@ -60,7 +71,7 @@ public class OrderActivity extends AppCompatActivity {
         // Set cost default to $0.00
         TextView costTextView = (TextView) findViewById(
                 R.id.cost_text_view);
-        costTextView.setText("$0.00");
+        costTextView.setText(getString(R.string.initial_cost));
 
         setupSizeSpinner();
         setupMilkSpinner();
@@ -91,13 +102,13 @@ public class OrderActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch(position) {
                     case 0:
-                        mSize = "Small";
+                        mSize = getString(R.string.tea_size_small);
                         break;
                     case 1:
-                        mSize = "Medium";
+                        mSize = getString(R.string.tea_size_medium);
                         break;
                     case 2:
-                        mSize = "Large";
+                        mSize = getString(R.string.tea_size_large);
                         break;
 
                     }
@@ -138,19 +149,19 @@ public class OrderActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch(position) {
                     case 0:
-                        mMilkType = "None";
+                        mMilkType = getString(R.string.milk_type_none);
                         break;
                     case 1:
-                        mMilkType = "Nonfat Milk";
+                        mMilkType = getString(R.string.milk_type_nonfat);
                         break;
                     case 2:
-                        mMilkType = "1% Milk";
+                        mMilkType = getString(R.string.milk_type_1_percent);
                         break;
                     case 3:
-                        mMilkType = "2% Milk";
+                        mMilkType = getString(R.string.milk_type_2_percent);
                         break;
                     case 4:
-                        mMilkType = "Whole Milk";
+                        mMilkType = getString(R.string.milk_type_whole);
                         break;
                 }
             }
@@ -193,19 +204,19 @@ public class OrderActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch(position) {
                     case 0:
-                        mSugarType = "0% - Not Sweet";
+                        mSugarType = getString(R.string.sweet_type_0);
                         break;
                     case 1:
-                        mMilkType = "25% - Slightly Sweet";
+                        mSugarType = getString(R.string.sweet_type_25);
                         break;
                     case 2:
-                        mMilkType = "50% - Half Sweet";
+                        mSugarType = getString(R.string.sweet_type_50);
                         break;
                     case 3:
-                        mMilkType = "75% - Moderately Sweet";
+                        mSugarType = getString(R.string.sweet_type_75);
                         break;
                     case 4:
-                        mMilkType = "100% - Full Sweetness";
+                        mSugarType = getString(R.string.sweet_type_100);
                         break;
                 }
             }
@@ -256,18 +267,16 @@ public class OrderActivity extends AppCompatActivity {
      */
     private int calculatePrice() {
 
-        // Determine tea size price
-        if (mSize.equals("Small")) {
+        // Calculate the total order mTotalPrice by multiplying by the mQuantity
+        if (mSize.equals(getString(R.string.tea_size_small))) {
             mTotalPrice = mQuantity * SMALL_PRICE;
-        } else if (mSize.equals("Medium")) {
+        } else if (mSize.equals(getString(R.string.tea_size_medium))) {
             mTotalPrice = mQuantity * MED_PRICE;
         } else {
             mTotalPrice = mQuantity * LARGE_PRICE;
         }
 
-        // Calculate the total order mTotalPrice by multiplying by the mQuantity
-        return mTotalPrice; // TODO so if this is a private method, then it will only be used in
-        // this class, where mTotalPrice is an instance variable and in scope, so why return?
+        return mTotalPrice;
     }
 
     /**
@@ -299,12 +308,12 @@ public class OrderActivity extends AppCompatActivity {
 
         // Create a new intent to open the {@link OrderSummaryActivity}
         Intent intent = new Intent(OrderActivity.this, OrderSummaryActivity.class);
-        intent.putExtra("totalPrice", mTotalPrice);
-        intent.putExtra("teaName", mTeaName);
-        intent.putExtra("size", mSize);
-        intent.putExtra("milkType", mMilkType);
-        intent.putExtra("sugarType", mSugarType);
-        intent.putExtra("quantity", mQuantity);
+        intent.putExtra(EXTRA_TOTAL_PRICE, mTotalPrice);
+        intent.putExtra(EXTRA_TEA_NAME, mTeaName);
+        intent.putExtra(EXTRA_SIZE, mSize);
+        intent.putExtra(EXTRA_MILK_TYPE, mMilkType);
+        intent.putExtra(EXTRA_SUGAR_TYPE, mSugarType);
+        intent.putExtra(EXTRA_QUANTITY, mQuantity);
 
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
