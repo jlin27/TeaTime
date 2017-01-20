@@ -17,7 +17,6 @@
 package com.example.android.teatime;
 
 import android.content.Intent;
-import android.icu.text.NumberFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -28,6 +27,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.text.NumberFormat;
 
 public class OrderActivity extends AppCompatActivity {
 

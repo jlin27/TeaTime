@@ -16,13 +16,14 @@
 package com.example.android.teatime;
 
 import android.content.Intent;
-import android.icu.text.NumberFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
+
+import java.text.NumberFormat;
 
 public class OrderSummaryActivity extends AppCompatActivity {
 
@@ -56,7 +57,6 @@ public class OrderSummaryActivity extends AppCompatActivity {
      * @param sugarType        amount of sugar to add
      * @return text summary
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void displayOrderSummary(String teaName, int price, String size, String milkType,
                                      String sugarType, int quantity) {
 
