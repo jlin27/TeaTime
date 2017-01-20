@@ -17,9 +17,7 @@
 package com.example.android.teatime;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -237,7 +235,6 @@ public class OrderActivity extends AppCompatActivity {
     /**
      * Increments the quantity and recalculates the price
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void increment(View view) {
 
         mQuantity = mQuantity + 1;
@@ -249,7 +246,6 @@ public class OrderActivity extends AppCompatActivity {
     /**
      * Decrements the quantity and recalculates the price
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void decrement(View view) {
 
         if(mQuantity>0) {
@@ -290,7 +286,6 @@ public class OrderActivity extends AppCompatActivity {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void displayCost(int totalPrice) {
         TextView costTextView = (TextView) findViewById(
                 R.id.cost_text_view);
