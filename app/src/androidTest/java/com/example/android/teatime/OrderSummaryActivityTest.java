@@ -24,7 +24,10 @@ public class OrderSummaryActivityTest {
 
 
     /**
-     * A JUnit {@link Rule @Rule} to init and release Espresso Intents before and after each
+     *
+     * This test demonstrates Espresso Intents which allows intent stubbing and validation.
+     *
+     * A JUnit {@link Rule @Rule} initializes and release Espresso Intents before and after each
      * test run.
      * <p>
      * Rules are interceptors which are executed for each test method and will run before
@@ -36,7 +39,7 @@ public class OrderSummaryActivityTest {
 
 
     public final static String EXTRA_SIZE = "com.example.android.teatime.EXTRA_SIZE";
-    public static final String TEA_SIZE = "Medium";
+    public static final String TEA_SIZE = "Small";
 
     @Rule
     public IntentsTestRule<OrderSummaryActivity> mActivityRule = new IntentsTestRule<>(
@@ -48,7 +51,7 @@ public class OrderSummaryActivityTest {
 
         // Stub the Intent. When an intent is sent to OrderSummaryActivity,
         // this tells Espresso to respond with the ActivityResult we just created
-        intending(toPackage("com.example.android.teatime.ordersummaryactivity")).respondWith(result);
+        intending(toPackage("com.example.android.teatime")).respondWith(result);
     }
 
 

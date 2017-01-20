@@ -11,8 +11,8 @@
     <string name="green_tea_name">Green Tea</string>
     <string name="white_tea_name">White Tea</string>
     <string name="oolong_tea_name">Oolong Tea</string>
-    <string name="puerh_tea_name">Pu-erh Tea</string>
-    <string name="matcha_tea_name">Matcha Tea</string>
+    <string name="honey_lemon_tea_name">Honey Lemon Tea</string>
+    <string name="chamomile_tea_name">Chamomile Tea</string>
 
 
     <!--OrderActivity Form values-->
@@ -21,7 +21,7 @@
     <string name="sugar_choices">Sugar Choices</string>
     <string name="quantity">Quantity</string>
     <string name="order">ORDER</string>
-    <string name="initial_cost">$.00</string>
+    <string name="initial_cost">$0.00</string>
     <string name="initial_quantity_value">0</string>
     <string name="tea_size">Size</string>
 

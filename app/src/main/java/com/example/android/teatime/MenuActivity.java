@@ -59,8 +59,8 @@ public class MenuActivity extends AppCompatActivity implements ImageDelayer.Dela
         teas.add(new Tea(getString(R.string.green_tea_name), R.drawable.green_tea));
         teas.add(new Tea(getString(R.string.white_tea_name), R.drawable.white_tea));
         teas.add(new Tea(getString(R.string.oolong_tea_name), R.drawable.oolong_tea));
-        teas.add(new Tea(getString(R.string.puerh_tea_name), R.drawable.puerh_tea));
-        teas.add(new Tea(getString(R.string.matcha_tea_name), R.drawable.matcha_tea));
+        teas.add(new Tea(getString(R.string.honey_lemon_tea_name), R.drawable.honey_lemon_tea));
+        teas.add(new Tea(getString(R.string.chamomile_tea_name), R.drawable.chamomile_tea));
 
         // Create a {@link TeaAdapter}, whose data source is a list of {@link Tea}s.
         // The adapter know how to create grid items for each item in the list.
