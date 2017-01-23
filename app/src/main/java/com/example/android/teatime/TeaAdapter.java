@@ -35,6 +35,7 @@ import java.util.ArrayList;
 
 public class TeaAdapter extends ArrayAdapter<Tea> {
 
+    // TODO add member m to name
     private Context context;
     private int layoutResourceId;
     private ArrayList data = new ArrayList();

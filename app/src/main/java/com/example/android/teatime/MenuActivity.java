@@ -37,8 +37,7 @@ import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity implements ImageDelayer.DelayerCallback {
 
-
-    Intent teaIntent;
+    Intent mTeaIntent;
 
     public final static String EXTRA_TEA_NAME = "com.example.android.teatime.EXTRA_TEA_NAME";
 
@@ -75,18 +74,21 @@ public class MenuActivity extends AppCompatActivity implements ImageDelayer.Dela
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
                 Tea item = (Tea) adapterView.getItemAtPosition(position);
-                // Set the intent to open the {@link TeaDetailActivity}
-                teaIntent = new Intent(MenuActivity.this, OrderActivity.class);
+                // Set the intent to open the {@link OrderActivity}
+                mTeaIntent = new Intent(MenuActivity.this, OrderActivity.class);
 
                 // The delayer notifies the activity via a callback
                 // Pass in the tea name to be displayed in the detail activity
                 String teaName = item.getTeaName();
                 int teaImage = item.getImageResourceId();
 
-                teaIntent.putExtra(EXTRA_TEA_NAME, teaName);
+                mTeaIntent.putExtra(EXTRA_TEA_NAME, teaName);
 
-                if (teaIntent.resolveActivity(getPackageManager()) != null) {
+                // TODO remove this if statement because it's an explicit intent
+                if (mTeaIntent.resolveActivity(getPackageManager()) != null) {
+
                     // Set a temporary delay toast message
+                    // TODO move this toast code to image delayer
                     Context context = getApplicationContext();
                     String text = getString(R.string.loading_msg);
                     int duration = Toast.LENGTH_SHORT;
@@ -96,6 +98,9 @@ public class MenuActivity extends AppCompatActivity implements ImageDelayer.Dela
 
 
                     // Submit the image to the delayer
+                    // TODO image on second order screen not there and this should be on second order
+                    // screen - also, would change to put inside a method called something like
+                    // "downloadImage()" to make it clear what fake thing this is emulating
                     ImageDelayer.processImage(teaImage, MenuActivity.this, mIdlingResource);
                 }
             }
@@ -108,7 +113,7 @@ public class MenuActivity extends AppCompatActivity implements ImageDelayer.Dela
     public void onDone(int image) {
 
         // The delayer starts the activity via a callback.
-        startActivity(teaIntent);
+        startActivity(mTeaIntent);
     }
 
     /**

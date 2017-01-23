@@ -17,6 +17,7 @@
 package com.example.android.teatime.model;
 
 /**
+ * TODO Fix this comment
  * Created by jessicalin on 1/3/17.
  */
 
@@ -31,7 +32,6 @@ public class Tea {
     }
 
     public String getTeaName() {
-
         return mTeaName;
     }
 
