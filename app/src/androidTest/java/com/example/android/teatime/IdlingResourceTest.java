@@ -58,14 +58,14 @@ public class IdlingResourceTest {
 
         // Click on the GridView item at position 1. Use onData instead of onView because
         // it is an AdapterView.
-        onData(anything()).inAdapterView(withId(R.id.gridView)).atPosition(1).perform(click());
+        onData(anything()).inAdapterView(withId(R.id.tea_grid_view)).atPosition(1).perform(click());
 
         // Verify that the correct tea name appears in the OrderActivity
         onView(withId(R.id.tea_name_text_view)).check(matches(withText(TEA_NAME)));
 
 
     }
-    
+
 
     @After
     public void unregisterIdlingResource() {

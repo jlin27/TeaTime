@@ -16,9 +16,10 @@
 
 package com.example.android.teatime.model;
 
+
 /**
- * TODO Fix this comment
- * Created by jessicalin on 1/3/17.
+ * {@link Tea} represents a tea that the user can select from the menu.
+ * It contains a tea name and an associated.
  */
 
 public class Tea {

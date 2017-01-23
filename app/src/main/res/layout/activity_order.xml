@@ -22,6 +22,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!-- TODO remove extra linear layout -->
+        <!-- TODO consider switching the various linearlayouts to relative -->
         <LinearLayout
             android:id="@+id/activity_tea_detail_header"
             android:layout_width="match_parent"

@@ -50,6 +50,7 @@ public class MenuActivity extends AppCompatActivity implements ImageDelayer.Dela
         setContentView(R.layout.activity_menu);
         Toolbar menuToolbar = (Toolbar) findViewById(R.id.menu_toolbar);
         setSupportActionBar(menuToolbar);
+        // TODO see if there is a cleaner way to do this
         getSupportActionBar().setTitle(getString(R.string.menu_title));
 
         // Create an arraylist of teas
@@ -63,7 +64,7 @@ public class MenuActivity extends AppCompatActivity implements ImageDelayer.Dela
 
         // Create a {@link TeaAdapter}, whose data source is a list of {@link Tea}s.
         // The adapter know how to create grid items for each item in the list.
-        GridView gridview = (GridView) findViewById(R.id.gridView);
+        GridView gridview = (GridView) findViewById(R.id.tea_grid_view);
         TeaAdapter adapter = new TeaAdapter(this, R.layout.grid_item_layout, teas);
         gridview.setAdapter(adapter);
 
@@ -84,9 +85,6 @@ public class MenuActivity extends AppCompatActivity implements ImageDelayer.Dela
 
                 mTeaIntent.putExtra(EXTRA_TEA_NAME, teaName);
 
-                // TODO remove this if statement because it's an explicit intent
-                if (mTeaIntent.resolveActivity(getPackageManager()) != null) {
-
                     // Set a temporary delay toast message
                     // TODO move this toast code to image delayer
                     Context context = getApplicationContext();
@@ -102,13 +100,13 @@ public class MenuActivity extends AppCompatActivity implements ImageDelayer.Dela
                     // screen - also, would change to put inside a method called something like
                     // "downloadImage()" to make it clear what fake thing this is emulating
                     ImageDelayer.processImage(teaImage, MenuActivity.this, mIdlingResource);
-                }
             }
         });
 
     }
 
 
+    // TODO move this into the activity where the images are being loaded into - order activity
     @Override
     public void onDone(int image) {
 

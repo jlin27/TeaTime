@@ -37,7 +37,7 @@ public class OrderSummaryActivityTest {
      * for you and also expose the activity under test.
      */
 
-
+    // TODO remove these extras and reference the actual ones for consistency
     public final static String EXTRA_SIZE = "com.example.android.teatime.EXTRA_SIZE";
     public static final String TEA_SIZE = "Small";
 

@@ -38,7 +38,11 @@ public class MenuActivityScreenTest {
     @Test
     public void MenuActivityScreenTest3() {
 
-        onData(anything()).inAdapterView(withId(R.id.gridView)).atPosition(1).perform(click());
+
+        //TODO change to check the text of gridView item instead of just position
+        // TODO update method name
+        // TODO make sure all ID names
+        onData(anything()).inAdapterView(withId(R.id.tea_grid_view)).atPosition(1).perform(click());
 
         onView(withId(R.id.tea_name_text_view)).check(matches(withText(TEA_NAME)));
 

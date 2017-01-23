@@ -35,8 +35,8 @@ public class OrderActivity extends AppCompatActivity {
     private int mTotalPrice = 0;
 
     private static final int SMALL_PRICE = 5;
-    private  static final  int MED_PRICE = 6;
-    private static final  int LARGE_PRICE = 7;
+    private  static final int MEDIUM_PRICE = 6;
+    private static final int LARGE_PRICE = 7;
 
     private String mMilkType;
     private String mSugarType;
@@ -247,10 +247,11 @@ public class OrderActivity extends AppCompatActivity {
      * Decrements the quantity and recalculates the price
      */
     public void decrement(View view) {
-
         if(mQuantity>0) {
             mQuantity = mQuantity - 1;
         }
+        // TODO you can move this inside the if statement or stop the method if it doesn't have a
+        // high enough quantity
         displayQuantity(mQuantity);
         mTotalPrice = calculatePrice();
         displayCost(mTotalPrice);
@@ -264,11 +265,12 @@ public class OrderActivity extends AppCompatActivity {
      */
     private int calculatePrice() {
 
+        // TODO use switch/case here
         // Calculate the total order mTotalPrice by multiplying by the mQuantity
         if (mSize.equals(getString(R.string.tea_size_small))) {
             mTotalPrice = mQuantity * SMALL_PRICE;
         } else if (mSize.equals(getString(R.string.tea_size_medium))) {
-            mTotalPrice = mQuantity * MED_PRICE;
+            mTotalPrice = mQuantity * MEDIUM_PRICE;
         } else {
             mTotalPrice = mQuantity * LARGE_PRICE;
         }
@@ -291,8 +293,7 @@ public class OrderActivity extends AppCompatActivity {
                 R.id.cost_text_view);
 
         String convertPrice = NumberFormat.getCurrencyInstance().format(totalPrice);
-
-        costTextView.setText(String.valueOf(convertPrice));
+        costTextView.setText(convertPrice);
 
     }
 
@@ -311,6 +312,7 @@ public class OrderActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_SUGAR_TYPE, mSugarType);
         intent.putExtra(EXTRA_QUANTITY, mQuantity);
 
+        // TODO no need for resolveActivity for explicit activity
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }

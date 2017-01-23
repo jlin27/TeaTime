@@ -30,6 +30,7 @@ class ImageDelayer {
                                @Nullable final SimpleIdlingResource idlingResource) {
         // The IdlingResource is null in production.
         if (idlingResource != null) {
+            // TODO concisely, what does a resource being "idle" mean
             idlingResource.setIdleState(false);
         }
 
@@ -41,6 +42,9 @@ class ImageDelayer {
                 if (callback != null) {
                     callback.onDone(image);
                     if (idlingResource != null) {
+                        // TODO so the test runs when this is true?
+                        // TODO why not actually load an image? what would that look like
+                        // TODO why not use counting resource? That sounds a lot more straight forward
                         idlingResource.setIdleState(true);
                     }
                 }
