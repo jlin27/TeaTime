@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<LinearLayout
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -37,10 +43,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
-
-
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/order_activity_tea_image"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:src="@drawable/image_placeholder"/>
 
         <TextView
             style="@style/FormTextStyle"
@@ -49,7 +59,6 @@
             android:layout_gravity="bottom"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
             android:text="@string/Customizations" />
 
 
@@ -236,3 +245,5 @@
     </LinearLayout>
 
 </LinearLayout>
+
+</ScrollView>

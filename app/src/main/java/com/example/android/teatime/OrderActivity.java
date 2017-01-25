@@ -18,25 +18,36 @@ package com.example.android.teatime;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.android.teatime.IdlingResource.SimpleIdlingResource;
+
 import java.text.NumberFormat;
 
-public class OrderActivity extends AppCompatActivity {
+public class OrderActivity extends AppCompatActivity implements ImageDownloader.DelayerCallback {
 
 
     private int mQuantity = 0;
     private int mTotalPrice = 0;
 
     private static final int SMALL_PRICE = 5;
-    private  static final int MEDIUM_PRICE = 6;
+    private static final int MEDIUM_PRICE = 6;
     private static final int LARGE_PRICE = 7;
+
+    private static final String TEA_SIZE_SMALL = "Small";
+    private static final String TEA_SIZE_MEDIUM = "Medium";
+    private static final String TEA_SIZE_LARGE = "Large";
 
     private String mMilkType;
     private String mSugarType;
@@ -48,8 +59,12 @@ public class OrderActivity extends AppCompatActivity {
     public final static String EXTRA_TEA_NAME = "com.example.android.teatime.EXTRA_TEA_NAME";
     public final static String EXTRA_SIZE = "com.example.android.teatime.EXTRA_SIZE";
     public final static String EXTRA_MILK_TYPE = "com.example.android.teatime.EXTRA_MILK_TYPE";
-    public final static String EXTRA_SUGAR_TYPE= "com.example.android.teatime.EXTRA_SUGAR_TYPE";
-    public final static String EXTRA_QUANTITY= "com.example.android.teatime.EXTRA_QUANTITY";
+    public final static String EXTRA_SUGAR_TYPE = "com.example.android.teatime.EXTRA_SUGAR_TYPE";
+    public final static String EXTRA_QUANTITY = "com.example.android.teatime.EXTRA_QUANTITY";
+
+    // The Idling Resource which will be null in production.
+    @Nullable
+    private SimpleIdlingResource mIdlingResource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +73,7 @@ public class OrderActivity extends AppCompatActivity {
         Toolbar menuToolbar = (Toolbar) findViewById(R.id.order_toolbar);
         setSupportActionBar(menuToolbar);
         getSupportActionBar().setTitle(getString(R.string.order_title));
+
 
         // Set header name and image depending on which item was clicked in the gridView
         Intent intent = getIntent();
@@ -76,6 +92,39 @@ public class OrderActivity extends AppCompatActivity {
         setupMilkSpinner();
         setupSugarSpinner();
 
+        // Submit the image to the delayer
+        // TODO image on second order screen not there and this should be on second order
+        // screen - also, would change to put inside a method called something like
+        // "downloadImage()" to make it clear what fake thing this is emulating
+        ImageDownloader.downloadImage(this, OrderActivity.this, mIdlingResource);
+
+        // The delayer notifies the activity via a callback
+        // Pass in the tea name to be displayed in the detail activity
+
+
+
+    }
+
+    // TODO move this into the activity where the images are being loaded into - order activity
+    @Override
+    public void onDone(int image) {
+
+
+        ImageView orderActivityImageView = (ImageView) findViewById(R.id.order_activity_tea_image);
+        orderActivityImageView.setImageResource(image);
+
+    }
+
+    /**
+     * Only called from test, creates and returns a new {@link SimpleIdlingResource}.
+     */
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource() {
+        if (mIdlingResource == null) {
+            mIdlingResource = new SimpleIdlingResource();
+        }
+        return mIdlingResource;
     }
 
     /**
@@ -99,7 +148,7 @@ public class OrderActivity extends AppCompatActivity {
         mSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch(position) {
+                switch (position) {
                     case 0:
                         mSize = getString(R.string.tea_size_small);
                         break;
@@ -110,8 +159,8 @@ public class OrderActivity extends AppCompatActivity {
                         mSize = getString(R.string.tea_size_large);
                         break;
 
-                    }
                 }
+            }
 
             // Because AdapterView is an abstract class, onNothingSelected must be defined
             @Override
@@ -146,7 +195,7 @@ public class OrderActivity extends AppCompatActivity {
         mSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch(position) {
+                switch (position) {
                     case 0:
                         mMilkType = getString(R.string.milk_type_none);
                         break;
@@ -201,7 +250,7 @@ public class OrderActivity extends AppCompatActivity {
         mSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch(position) {
+                switch (position) {
                     case 0:
                         mSugarType = getString(R.string.sweet_type_0);
                         break;
@@ -247,14 +296,14 @@ public class OrderActivity extends AppCompatActivity {
      * Decrements the quantity and recalculates the price
      */
     public void decrement(View view) {
-        if(mQuantity>0) {
+        if (mQuantity > 0) {
+
             mQuantity = mQuantity - 1;
+            displayQuantity(mQuantity);
+            mTotalPrice = calculatePrice();
+            displayCost(mTotalPrice);
         }
-        // TODO you can move this inside the if statement or stop the method if it doesn't have a
-        // high enough quantity
-        displayQuantity(mQuantity);
-        mTotalPrice = calculatePrice();
-        displayCost(mTotalPrice);
+
     }
 
 
@@ -265,14 +314,17 @@ public class OrderActivity extends AppCompatActivity {
      */
     private int calculatePrice() {
 
-        // TODO use switch/case here
         // Calculate the total order mTotalPrice by multiplying by the mQuantity
-        if (mSize.equals(getString(R.string.tea_size_small))) {
-            mTotalPrice = mQuantity * SMALL_PRICE;
-        } else if (mSize.equals(getString(R.string.tea_size_medium))) {
-            mTotalPrice = mQuantity * MEDIUM_PRICE;
-        } else {
-            mTotalPrice = mQuantity * LARGE_PRICE;
+        switch (mSize) {
+            case TEA_SIZE_SMALL:
+                mTotalPrice = mQuantity * SMALL_PRICE;
+                break;
+            case TEA_SIZE_MEDIUM:
+                mTotalPrice = mQuantity * MEDIUM_PRICE;
+                break;
+            case TEA_SIZE_LARGE:
+                mTotalPrice = mQuantity * LARGE_PRICE;
+                break;
         }
 
         return mTotalPrice;
@@ -312,9 +364,7 @@ public class OrderActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_SUGAR_TYPE, mSugarType);
         intent.putExtra(EXTRA_QUANTITY, mQuantity);
 
-        // TODO no need for resolveActivity for explicit activity
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
-        }
+        startActivity(intent);
+
     }
 }

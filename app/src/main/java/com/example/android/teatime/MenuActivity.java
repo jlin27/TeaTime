@@ -16,33 +16,23 @@
 
 package com.example.android.teatime;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
-import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
-import com.example.android.teatime.IdlingResource.SimpleIdlingResource;
 import com.example.android.teatime.model.Tea;
 
 import java.util.ArrayList;
 
-public class MenuActivity extends AppCompatActivity implements ImageDelayer.DelayerCallback {
+public class MenuActivity extends AppCompatActivity {
 
     Intent mTeaIntent;
 
     public final static String EXTRA_TEA_NAME = "com.example.android.teatime.EXTRA_TEA_NAME";
-
-    // The Idling Resource which will be null in production.
-    @Nullable private SimpleIdlingResource mIdlingResource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,52 +67,13 @@ public class MenuActivity extends AppCompatActivity implements ImageDelayer.Dela
                 Tea item = (Tea) adapterView.getItemAtPosition(position);
                 // Set the intent to open the {@link OrderActivity}
                 mTeaIntent = new Intent(MenuActivity.this, OrderActivity.class);
-
-                // The delayer notifies the activity via a callback
-                // Pass in the tea name to be displayed in the detail activity
                 String teaName = item.getTeaName();
-                int teaImage = item.getImageResourceId();
-
                 mTeaIntent.putExtra(EXTRA_TEA_NAME, teaName);
+                startActivity(mTeaIntent);
 
-                    // Set a temporary delay toast message
-                    // TODO move this toast code to image delayer
-                    Context context = getApplicationContext();
-                    String text = getString(R.string.loading_msg);
-                    int duration = Toast.LENGTH_SHORT;
-
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-
-
-                    // Submit the image to the delayer
-                    // TODO image on second order screen not there and this should be on second order
-                    // screen - also, would change to put inside a method called something like
-                    // "downloadImage()" to make it clear what fake thing this is emulating
-                    ImageDelayer.processImage(teaImage, MenuActivity.this, mIdlingResource);
             }
         });
 
     }
 
-
-    // TODO move this into the activity where the images are being loaded into - order activity
-    @Override
-    public void onDone(int image) {
-
-        // The delayer starts the activity via a callback.
-        startActivity(mTeaIntent);
-    }
-
-    /**
-     * Only called from test, creates and returns a new {@link SimpleIdlingResource}.
-     */
-    @VisibleForTesting
-    @NonNull
-    public IdlingResource getIdlingResource() {
-        if (mIdlingResource == null) {
-            mIdlingResource = new SimpleIdlingResource();
-        }
-        return mIdlingResource;
-    }
 }

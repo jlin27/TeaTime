@@ -1,8 +1,10 @@
 package com.example.android.teatime;
 
+import android.content.Context;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.test.espresso.IdlingResource;
+import android.widget.Toast;
 
 import com.example.android.teatime.IdlingResource.SimpleIdlingResource;
 
@@ -12,23 +14,35 @@ import com.example.android.teatime.IdlingResource.SimpleIdlingResource;
  * This executes a long-running operation on a different thread that results in problems with
  * Espresso if an {@link IdlingResource} is not implemented and registered.
  */
-class ImageDelayer {
+class ImageDownloader {
 
     private static final int DELAY_MILLIS = 3000;
+    private static final int image = R.drawable.order_activity_tea_image;
 
     interface DelayerCallback{
         void onDone(int image);
     }
 
     /**
-     * Takes a String and returns it after {@link #DELAY_MILLIS} via a {@link DelayerCallback}.
-     * @param image the image resource id that will be returned via the callback
+     * This method is meant to simulate the delay time when downloading an image file from the;
+     * however, in this hypothetical situation, we've provided the image.
+     * We simulate a delay time of {@link #DELAY_MILLIS} and once the time
+     * is up we return the image back to the calling activity via a {@link DelayerCallback}.
      * @param callback used to notify the caller asynchronously
      */
 
-    static void processImage(final int image, final DelayerCallback callback,
-                               @Nullable final SimpleIdlingResource idlingResource) {
-        // The IdlingResource is null in production.
+    static void downloadImage(Context context, final DelayerCallback callback,
+                              @Nullable final SimpleIdlingResource idlingResource) {
+
+        Context mContext = context.getApplicationContext();
+        String text = mContext.getString(R.string.loading_msg);
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(mContext, text, duration);
+        toast.show();
+
+        // The IdlingResource is null in production. Espresso waits for the app to be "idle" before
+        // performing the next action and checking the assertion.
         if (idlingResource != null) {
             // TODO concisely, what does a resource being "idle" mean
             idlingResource.setIdleState(false);

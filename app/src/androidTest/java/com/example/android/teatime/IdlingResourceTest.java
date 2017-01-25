@@ -41,7 +41,7 @@ import static org.hamcrest.Matchers.anything;
 public class IdlingResourceTest {
 
     @Rule
-    public ActivityTestRule<MenuActivity> mActivityTestRule = new ActivityTestRule<>(MenuActivity.class);
+    public ActivityTestRule<OrderActivity> mActivityTestRule = new ActivityTestRule<>(OrderActivity.class);
 
     private IdlingResource mIdlingResource;
     public static final String TEA_NAME = "Green Tea";
