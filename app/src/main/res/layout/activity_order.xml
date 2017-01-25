@@ -28,8 +28,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- TODO remove extra linear layout -->
-        <!-- TODO consider switching the various linearlayouts to relative -->
         <LinearLayout
             android:id="@+id/activity_tea_detail_header"
             android:layout_width="match_parent"
@@ -62,7 +60,7 @@
             android:text="@string/Customizations" />
 
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/sizeLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,16 +81,16 @@
                 style="@style/FormTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/sizeLabel"
+                android:layout_below="@id/sizeLabel"
                 android:layout_alignParentRight="true"
-                android:layout_toRightOf="@id/sizeLabel"
+                android:layout_alignParentEnd="true"
                 android:drawSelectorOnTop="true" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <View style="@style/Divider"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/milkLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -113,16 +111,16 @@
                 style="@style/FormTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/milkLabel"
+                android:layout_below="@id/milkLabel"
                 android:layout_alignParentRight="true"
-                android:layout_toRightOf="@id/milkLabel"
+                android:layout_alignParentEnd="true"
                 android:drawSelectorOnTop="true" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <View style="@style/Divider"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/sugarLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -143,16 +141,16 @@
                 style="@style/FormTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/sugarLabel"
+                android:layout_below="@id/sugarLabel"
                 android:layout_alignParentRight="true"
-                android:layout_toRightOf="@id/sugarLabel"
+                android:layout_alignParentEnd="true"
                 android:drawSelectorOnTop="true" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <View style="@style/Divider"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/quantityLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -206,7 +204,7 @@
 
             </LinearLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

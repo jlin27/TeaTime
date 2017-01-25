@@ -55,7 +55,7 @@ public class MenuActivity extends AppCompatActivity {
         // Create a {@link TeaAdapter}, whose data source is a list of {@link Tea}s.
         // The adapter know how to create grid items for each item in the list.
         GridView gridview = (GridView) findViewById(R.id.tea_grid_view);
-        TeaAdapter adapter = new TeaAdapter(this, R.layout.grid_item_layout, teas);
+        TeaMenuAdapter adapter = new TeaMenuAdapter(this, R.layout.grid_item_layout, teas);
         gridview.setAdapter(adapter);
 
 

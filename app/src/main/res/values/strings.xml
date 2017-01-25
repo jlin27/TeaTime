@@ -36,7 +36,7 @@
 
 
     <!--Idling Resources loading message-->
-    <string name="loading_msg">Loading details page...</string>
+    <string name="loading_msg">Loading image…</string>
     <string name="tea_size_small">Small</string>
     <string name="tea_size_medium">Medium</string>
     <string name="tea_size_large">Large</string>

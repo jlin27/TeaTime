@@ -30,20 +30,20 @@ import com.example.android.teatime.model.Tea;
 import java.util.ArrayList;
 
 /**
- * Created by jessicalin on 1/3/17.
+ * TeaMenuAdapter is backed by an ArrayList of {@link Tea} objects which populate
+ * the GridView in MenuActivity
  */
 
-public class TeaAdapter extends ArrayAdapter<Tea> {
+public class TeaMenuAdapter extends ArrayAdapter<Tea> {
 
-    // TODO add member m to name
-    private Context context;
+    private Context mContext;
     private int layoutResourceId;
     private ArrayList data = new ArrayList();
 
-    public TeaAdapter(Context context, int layoutResourceId,  ArrayList data) {
+    public TeaMenuAdapter(Context context, int layoutResourceId, ArrayList data) {
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
-        this.context = context;
+        this.mContext = context;
         this.data = data;
     }
 
@@ -61,7 +61,7 @@ public class TeaAdapter extends ArrayAdapter<Tea> {
 
         if (convertView == null) {
             // If it's not recycled, initialize some attributes
-            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+            LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
             convertView = inflater.inflate(layoutResourceId, parent, false);
             holder = new ViewHolder();
             holder.imageTitle = (TextView) convertView.findViewById(R.id.tea_grid_name);

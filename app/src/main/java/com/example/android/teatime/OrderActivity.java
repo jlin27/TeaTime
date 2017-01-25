@@ -83,6 +83,10 @@ public class OrderActivity extends AppCompatActivity implements ImageDownloader.
         teaNameTextView.setText(mTeaName);
 
 
+        // Make a call to {@link downloadImage} which simulates downloading a large image
+        // file which has a loading time delay.
+        ImageDownloader.downloadImage(this, OrderActivity.this, mIdlingResource);
+
         // Set cost default to $0.00
         TextView costTextView = (TextView) findViewById(
                 R.id.cost_text_view);
@@ -92,20 +96,13 @@ public class OrderActivity extends AppCompatActivity implements ImageDownloader.
         setupMilkSpinner();
         setupSugarSpinner();
 
-        // Submit the image to the delayer
-        // TODO image on second order screen not there and this should be on second order
-        // screen - also, would change to put inside a method called something like
-        // "downloadImage()" to make it clear what fake thing this is emulating
-        ImageDownloader.downloadImage(this, OrderActivity.this, mIdlingResource);
-
-        // The delayer notifies the activity via a callback
-        // Pass in the tea name to be displayed in the detail activity
-
-
 
     }
 
-    // TODO move this into the activity where the images are being loaded into - order activity
+    /**
+     * When the thread in {@link ImageDownloader} is finished, it will return the image resource ID
+     * via the callback's onDone().
+     */
     @Override
     public void onDone(int image) {
 

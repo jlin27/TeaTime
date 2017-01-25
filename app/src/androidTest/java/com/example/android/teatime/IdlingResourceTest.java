@@ -40,8 +40,16 @@ import static org.hamcrest.Matchers.anything;
 @RunWith(AndroidJUnit4.class)
 public class IdlingResourceTest {
 
+    /**
+     * The ActivityTestRule is a rule provided by Android used for functional testing of a single
+     * activity. The activity that will be tested will be launched before each test that's annotated
+     * with @Test and before methods annotated with @before. The activity will be terminated after
+     * the test and methods annotated with @After are complete. This rule allows you to directly
+     * access the activity during the test.
+     */
     @Rule
-    public ActivityTestRule<OrderActivity> mActivityTestRule = new ActivityTestRule<>(OrderActivity.class);
+    public ActivityTestRule<OrderActivity> mActivityTestRule =
+            new ActivityTestRule<>(OrderActivity.class);
 
     private IdlingResource mIdlingResource;
     public static final String TEA_NAME = "Green Tea";

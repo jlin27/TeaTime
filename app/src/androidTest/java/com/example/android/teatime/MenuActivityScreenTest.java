@@ -31,16 +31,22 @@ public class MenuActivityScreenTest {
 
     public static final String TEA_NAME = "Green Tea";
 
+    /**
+     * The ActivityTestRule is a rule provided by Android used for functional testing of a single
+     * activity. The activity that will be tested will be launched before each test that's annotated
+     * with @Test and before methods annotated with @before. The activity will be terminated after
+     * the test and methods annotated with @After are complete. This rule allows you to directly
+     * access the activity during the test.
+     */
     @Rule
     public ActivityTestRule<MenuActivity> mActivityTestRule = new ActivityTestRule<>(MenuActivity.class);
 
 
     @Test
-    public void MenuActivityScreenTest3() {
+    public void clickGridViewItem_OpensOrderActivity() {
 
 
         //TODO change to check the text of gridView item instead of just position
-        // TODO update method name
         onData(anything()).inAdapterView(withId(R.id.tea_grid_view)).atPosition(1).perform(click());
 
         onView(withId(R.id.tea_name_text_view)).check(matches(withText(TEA_NAME)));
