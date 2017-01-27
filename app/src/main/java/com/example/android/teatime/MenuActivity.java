@@ -40,10 +40,9 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         Toolbar menuToolbar = (Toolbar) findViewById(R.id.menu_toolbar);
         setSupportActionBar(menuToolbar);
-        // TODO see if there is a cleaner way to do this
         getSupportActionBar().setTitle(getString(R.string.menu_title));
 
-        // Create an arraylist of teas
+        // Create an ArrayList of teas
         final ArrayList<Tea> teas = new ArrayList<>();
         teas.add(new Tea(getString(R.string.black_tea_name), R.drawable.black_tea));
         teas.add(new Tea(getString(R.string.green_tea_name), R.drawable.green_tea));

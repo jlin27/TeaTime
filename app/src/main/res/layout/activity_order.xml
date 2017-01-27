@@ -200,17 +200,15 @@
                     android:onClick="increment"
                     android:textSize="22sp"
                     android:text="+" />
-
-
             </LinearLayout>
 
         </RelativeLayout>
 
+        <View style="@style/Divider"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_gap"
-            android:layout_marginTop="@dimen/default_gap"
             android:orientation="horizontal">
 
             <TextView

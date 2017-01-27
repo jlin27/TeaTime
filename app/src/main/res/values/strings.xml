@@ -28,6 +28,7 @@
 
     <!--OrderSummaryActivity values-->
     <string name="total">Total</string>
+    <string name="summary_tea_label">Tea Type</string>
     <string name="summary_size_label">Size</string>
     <string name="summary_milk_label">Milk Type</string>
     <string name="summary_sugar_label">Sugar Amount</string>
@@ -51,6 +52,10 @@
     <string name="sweet_type_75">75% - Moderately Sweet</string>
     <string name="sweet_type_100">100% - Full Sweetness</string>
     <string name="order_summary"/>
+    <string name="summary_email_prompt">Let your friends know you just ordered a delicious tea from TeaTime and they can too!</string>
+    <string name="send_email">Send Email</string>
+    <string name="order_summary_email_subject">Freshly Brewed from TeaTime</string>
+    <string name="email_message">I just ordered a delicious tea from TeaTime. Next time you are craving a tea, check them out!</string>
 
 
     <string-array name="tea_size_array">

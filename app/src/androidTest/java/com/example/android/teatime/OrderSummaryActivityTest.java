@@ -3,7 +3,6 @@ package com.example.android.teatime;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
@@ -13,65 +12,51 @@ import org.junit.runner.RunWith;
 
 import static android.app.Instrumentation.ActivityResult;
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.Intents.intending;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.toPackage;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.isInternal;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.core.AllOf.allOf;
+import static org.hamcrest.core.IsNot.not;
 
 @RunWith(AndroidJUnit4.class)
 public class OrderSummaryActivityTest {
 
+    private static final String emailMessage = "I just ordered a delicious tea from TeaTime. Next time you are craving a tea, check them out!";
 
     /**
      *
-     * This test demonstrates Espresso Intents which allows intent stubbing and validation.
+     * This test demonstrates Espresso Intents using the IntentsTestRule, a class that extends
+     * ActivityTestRule. IntentsTestRule initializes Espresso-Intents before each test that is annotated
+     * with @Test and releases it once the test is complete. The designated Activity
+     * is also terminated after each test.
      *
-     * A JUnit {@link Rule @Rule} initializes and release Espresso Intents before and after each
-     * test run.
-     * <p>
-     * Rules are interceptors which are executed for each test method and will run before
-     * any of your setup code in the {@link Before @Before} method.
-     * <p>
-     * This rule is based on {@link ActivityTestRule} and will create and launch of the activity
-     * for you and also expose the activity under test.
      */
-
-    // TODO remove these extras and reference the actual ones for consistency
-    public final static String EXTRA_SIZE = "com.example.android.teatime.EXTRA_SIZE";
-    public static final String TEA_SIZE = "Small";
 
     @Rule
     public IntentsTestRule<OrderSummaryActivity> mActivityRule = new IntentsTestRule<>(
             OrderSummaryActivity.class);
 
+
     @Before
-    public void stubOrderIntent() {
-        ActivityResult result = createOrderSummaryActivityResultStub();
-
-        // Stub the Intent. When an intent is sent to OrderSummaryActivity,
-        // this tells Espresso to respond with the ActivityResult we just created
-        intending(toPackage("com.example.android.teatime")).respondWith(result);
+    public void stubAllExternalIntents() {
+        // By default Espresso Intents does not stub any Intents. Stubbing needs to be setup before
+        // every test run. In this case all external Intents will be blocked.
+        intending(not(isInternal())).respondWith(new ActivityResult(Activity.RESULT_OK, null));
     }
 
-
-    private ActivityResult createOrderSummaryActivityResultStub() {
-
-        // Create the Intent that will be used in the Intent Stub
-        Intent resultData = new Intent();
-        resultData.putExtra(EXTRA_SIZE, TEA_SIZE);
-
-        // Create the ActivityResult with the Intent.
-        return new ActivityResult(Activity.RESULT_OK, resultData);
-
-
-    }
 
     @Test
-    public void placeOrder_checkSummary() {
+    private void clickSendEmailButton_SendsEmail() {
 
-        // Check that the order summary displays the selected customization
-        onView(withId(R.id.summary_tea_size)).check(matches(withText(TEA_SIZE)));
+        onView(withId(R.id.send_email_button)).perform(click());
+        // TODO: Update comments. Matcher<Intent> hasExtra (String key, T value)
+        intended(allOf(
+                hasAction(Intent.ACTION_SENDTO),
+                hasExtra(Intent.EXTRA_TEXT, emailMessage)));
 
     }
 
