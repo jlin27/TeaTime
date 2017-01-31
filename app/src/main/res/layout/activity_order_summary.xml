@@ -186,6 +186,7 @@
 
     </LinearLayout>
 
+    <View style="@style/Thick_Divider"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
