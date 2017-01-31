@@ -74,18 +74,12 @@ public class OrderActivity extends AppCompatActivity implements ImageDownloader.
         setSupportActionBar(menuToolbar);
         getSupportActionBar().setTitle(getString(R.string.order_title));
 
-
         // Set header name and image depending on which item was clicked in the gridView
         Intent intent = getIntent();
         mTeaName = intent.getStringExtra(MenuActivity.EXTRA_TEA_NAME);
 
         TextView teaNameTextView = (TextView) findViewById(R.id.tea_name_text_view);
         teaNameTextView.setText(mTeaName);
-
-
-        // Make a call to {@link downloadImage} which simulates downloading a large image
-        // file which has a loading time delay.
-        ImageDownloader.downloadImage(this, OrderActivity.this, mIdlingResource);
 
         // Set cost default to $0.00
         TextView costTextView = (TextView) findViewById(
@@ -95,21 +89,28 @@ public class OrderActivity extends AppCompatActivity implements ImageDownloader.
         setupSizeSpinner();
         setupMilkSpinner();
         setupSugarSpinner();
-
-
     }
 
     /**
      * When the thread in {@link ImageDownloader} is finished, it will return the image resource ID
-     * via the callback's onDone().
+     * via the callback's onDone(). Also sends an intent to transition to the OrderSummaryActivity.
      */
     @Override
     public void onDone(int image) {
 
-
         ImageView orderActivityImageView = (ImageView) findViewById(R.id.order_activity_tea_image);
         orderActivityImageView.setImageResource(image);
 
+        // Create a new intent to open the {@link OrderSummaryActivity}
+        Intent intent = new Intent(OrderActivity.this, OrderSummaryActivity.class);
+        intent.putExtra(EXTRA_TOTAL_PRICE, mTotalPrice);
+        intent.putExtra(EXTRA_TEA_NAME, mTeaName);
+        intent.putExtra(EXTRA_SIZE, mSize);
+        intent.putExtra(EXTRA_MILK_TYPE, mMilkType);
+        intent.putExtra(EXTRA_SUGAR_TYPE, mSugarType);
+        intent.putExtra(EXTRA_QUANTITY, mQuantity);
+
+        startActivity(intent);
     }
 
     /**
@@ -230,7 +231,6 @@ public class OrderActivity extends AppCompatActivity implements ImageDownloader.
      */
     private void setupSugarSpinner() {
 
-
         Spinner mSizeSpinner = (Spinner) findViewById(R.id.sugar_spinner);
 
         // Create an ArrayAdapter using the string array and a default mSizeSpinner layout
@@ -300,7 +300,6 @@ public class OrderActivity extends AppCompatActivity implements ImageDownloader.
             mTotalPrice = calculatePrice();
             displayCost(mTotalPrice);
         }
-
     }
 
 
@@ -323,7 +322,6 @@ public class OrderActivity extends AppCompatActivity implements ImageDownloader.
                 mTotalPrice = mQuantity * LARGE_PRICE;
                 break;
         }
-
         return mTotalPrice;
     }
 
@@ -334,7 +332,6 @@ public class OrderActivity extends AppCompatActivity implements ImageDownloader.
     private void displayQuantity(int numberOfTeas) {
         TextView quantityTextView = (TextView) findViewById(R.id.quantity_text_view);
         quantityTextView.setText(String.valueOf(numberOfTeas));
-
     }
 
     private void displayCost(int totalPrice) {
@@ -343,25 +340,15 @@ public class OrderActivity extends AppCompatActivity implements ImageDownloader.
 
         String convertPrice = NumberFormat.getCurrencyInstance().format(totalPrice);
         costTextView.setText(convertPrice);
-
     }
 
     /**
-     * This method is called when the order button is clicked
+     * This method is called when the "Brew Tea" button is clicked
      * and a new intent opens the the {@link OrderSummaryActivity}
      */
-    public void submitOrder(View view) {
-
-        // Create a new intent to open the {@link OrderSummaryActivity}
-        Intent intent = new Intent(OrderActivity.this, OrderSummaryActivity.class);
-        intent.putExtra(EXTRA_TOTAL_PRICE, mTotalPrice);
-        intent.putExtra(EXTRA_TEA_NAME, mTeaName);
-        intent.putExtra(EXTRA_SIZE, mSize);
-        intent.putExtra(EXTRA_MILK_TYPE, mMilkType);
-        intent.putExtra(EXTRA_SUGAR_TYPE, mSugarType);
-        intent.putExtra(EXTRA_QUANTITY, mQuantity);
-
-        startActivity(intent);
-
+    public void brewTea(View view) {
+        // Make a call to {@link downloadImage} which simulates downloading a large image
+        // file which has a loading time delay.
+        ImageDownloader.downloadImage(this, OrderActivity.this, mIdlingResource);
     }
 }
