@@ -47,7 +47,7 @@ public class TeaMenuAdapter extends ArrayAdapter<Tea> {
         this.data = data;
     }
 
-    static class ViewHolder {
+    private static class ViewHolder {
         TextView imageTitle;
         ImageView image;
     }

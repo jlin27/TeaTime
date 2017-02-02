@@ -18,24 +18,17 @@ package com.example.android.teatime;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
-import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.android.teatime.IdlingResource.SimpleIdlingResource;
-
 import java.text.NumberFormat;
 
-public class OrderActivity extends AppCompatActivity implements ImageDownloader.DelayerCallback {
+public class OrderActivity extends AppCompatActivity {
 
 
     private int mQuantity = 0;
@@ -62,10 +55,6 @@ public class OrderActivity extends AppCompatActivity implements ImageDownloader.
     public final static String EXTRA_SUGAR_TYPE = "com.example.android.teatime.EXTRA_SUGAR_TYPE";
     public final static String EXTRA_QUANTITY = "com.example.android.teatime.EXTRA_QUANTITY";
 
-    // The Idling Resource which will be null in production.
-    @Nullable
-    private SimpleIdlingResource mIdlingResource;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,40 +78,6 @@ public class OrderActivity extends AppCompatActivity implements ImageDownloader.
         setupSizeSpinner();
         setupMilkSpinner();
         setupSugarSpinner();
-    }
-
-    /**
-     * When the thread in {@link ImageDownloader} is finished, it will return the image resource ID
-     * via the callback's onDone(). Also sends an intent to transition to the OrderSummaryActivity.
-     */
-    @Override
-    public void onDone(int image) {
-
-        ImageView orderActivityImageView = (ImageView) findViewById(R.id.order_activity_tea_image);
-        orderActivityImageView.setImageResource(image);
-
-        // Create a new intent to open the {@link OrderSummaryActivity}
-        Intent intent = new Intent(OrderActivity.this, OrderSummaryActivity.class);
-        intent.putExtra(EXTRA_TOTAL_PRICE, mTotalPrice);
-        intent.putExtra(EXTRA_TEA_NAME, mTeaName);
-        intent.putExtra(EXTRA_SIZE, mSize);
-        intent.putExtra(EXTRA_MILK_TYPE, mMilkType);
-        intent.putExtra(EXTRA_SUGAR_TYPE, mSugarType);
-        intent.putExtra(EXTRA_QUANTITY, mQuantity);
-
-        startActivity(intent);
-    }
-
-    /**
-     * Only called from test, creates and returns a new {@link SimpleIdlingResource}.
-     */
-    @VisibleForTesting
-    @NonNull
-    public IdlingResource getIdlingResource() {
-        if (mIdlingResource == null) {
-            mIdlingResource = new SimpleIdlingResource();
-        }
-        return mIdlingResource;
     }
 
     /**
@@ -163,10 +118,7 @@ public class OrderActivity extends AppCompatActivity implements ImageDownloader.
             // Because AdapterView is an abstract class, onNothingSelected must be defined
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                return;
-                /**
-                 * Need to add code that prevents user from moving forward if not selected
-                 */
+                mSize = getString(R.string.tea_size_small);
             }
         });
 
@@ -216,10 +168,7 @@ public class OrderActivity extends AppCompatActivity implements ImageDownloader.
             // Because AdapterView is an abstract class, onNothingSelected must be defined
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                return;
-                /**
-                 * Need to add code that prevents user from moving forward if not selected
-                 */
+                mMilkType = getString(R.string.milk_type_none);
             }
         });
 
@@ -269,10 +218,7 @@ public class OrderActivity extends AppCompatActivity implements ImageDownloader.
             // Because AdapterView is an abstract class, onNothingSelected must be defined
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                return;
-                /**
-                 * Need to add code that prevents user from moving forward if not selected
-                 */
+                mSugarType = getString(R.string.sweet_type_100);
             }
         });
 
@@ -347,8 +293,15 @@ public class OrderActivity extends AppCompatActivity implements ImageDownloader.
      * and a new intent opens the the {@link OrderSummaryActivity}
      */
     public void brewTea(View view) {
-        // Make a call to {@link downloadImage} which simulates downloading a large image
-        // file which has a loading time delay.
-        ImageDownloader.downloadImage(this, OrderActivity.this, mIdlingResource);
+        // Create a new intent to open the {@link OrderSummaryActivity}
+        Intent intent = new Intent(OrderActivity.this, OrderSummaryActivity.class);
+        intent.putExtra(EXTRA_TOTAL_PRICE, mTotalPrice);
+        intent.putExtra(EXTRA_TEA_NAME, mTeaName);
+        intent.putExtra(EXTRA_SIZE, mSize);
+        intent.putExtra(EXTRA_MILK_TYPE, mMilkType);
+        intent.putExtra(EXTRA_SUGAR_TYPE, mSugarType);
+        intent.putExtra(EXTRA_QUANTITY, mQuantity);
+
+        startActivity(intent);
     }
 }
