@@ -69,8 +69,7 @@
 
     <!--Idling Resources loading message-->
     <string name="loading_msg">Your tea is brewing…</string>
-    <string name="tea_brewing_image">tea brewing image</string>
-
+    <string name="done_msg">Your tea is ready!</string>
 
 
     <!--Spinner Options-->

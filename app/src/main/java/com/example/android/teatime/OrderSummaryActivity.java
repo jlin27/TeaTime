@@ -36,6 +36,12 @@ public class OrderSummaryActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(getString(R.string.order_summary_title));
 
         Intent intent = getIntent();
+
+        // Set the loading message after the simulated delay in OrderActivity with the done message
+        String doneMsg = intent.getStringExtra(OrderActivity.EXTRA_DONE_MSG);
+        TextView loadingTextView = (TextView) findViewById(R.id.loading_text_view);
+        loadingTextView.setText(doneMsg);
+
         String teaName = intent.getStringExtra(OrderActivity.EXTRA_TEA_NAME);
         int price = intent.getIntExtra(OrderActivity.EXTRA_TOTAL_PRICE, 0);
         String size = intent.getStringExtra(OrderActivity.EXTRA_SIZE);

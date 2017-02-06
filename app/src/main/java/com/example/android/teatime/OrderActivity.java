@@ -18,6 +18,10 @@ package com.example.android.teatime;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -25,10 +29,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.android.teatime.IdlingResource.SimpleIdlingResource;
 
 import java.text.NumberFormat;
 
-public class OrderActivity extends AppCompatActivity {
+public class OrderActivity extends AppCompatActivity implements SimulateDownloader.DelayerCallback {
 
 
     private int mQuantity = 0;
@@ -48,12 +55,19 @@ public class OrderActivity extends AppCompatActivity {
 
     private String mSize;
 
+    private String loadingMsg = "Your tea is brewing";
+
     public final static String EXTRA_TOTAL_PRICE = "com.example.android.teatime.EXTRA_TOTAL_PRICE";
     public final static String EXTRA_TEA_NAME = "com.example.android.teatime.EXTRA_TEA_NAME";
     public final static String EXTRA_SIZE = "com.example.android.teatime.EXTRA_SIZE";
     public final static String EXTRA_MILK_TYPE = "com.example.android.teatime.EXTRA_MILK_TYPE";
     public final static String EXTRA_SUGAR_TYPE = "com.example.android.teatime.EXTRA_SUGAR_TYPE";
     public final static String EXTRA_QUANTITY = "com.example.android.teatime.EXTRA_QUANTITY";
+    public final static String EXTRA_DONE_MSG = "com.example.android.teatime.EXTRA_DONE_MSG";
+
+    // The Idling Resource which will be null in production.
+    @Nullable
+    private SimpleIdlingResource mIdlingResource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +92,18 @@ public class OrderActivity extends AppCompatActivity {
         setupSizeSpinner();
         setupMilkSpinner();
         setupSugarSpinner();
+    }
+
+    /**
+     * Only called from test, creates and returns a new {@link SimpleIdlingResource}.
+     */
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource() {
+        if (mIdlingResource == null) {
+            mIdlingResource = new SimpleIdlingResource();
+        }
+        return mIdlingResource;
     }
 
     /**
@@ -293,8 +319,22 @@ public class OrderActivity extends AppCompatActivity {
      * and a new intent opens the the {@link OrderSummaryActivity}
      */
     public void brewTea(View view) {
+        // Display the loading toast
+        Toast.makeText(getApplicationContext(), loadingMsg, Toast.LENGTH_SHORT).show();
+
+        // Make a call to {@link downloadProcess} which simulates asynchronous background work
+        SimulateDownloader.downloadProcess(OrderActivity.this, mIdlingResource);
+    }
+
+    /**
+     * When the thread in {@link SimulateDownloader} is finished, it will return the done message
+     * via the callback's onDone(). Also sends an intent to transition to the OrderSummaryActivity.
+     */
+    @Override
+    public void onDone(String doneMsg) {
         // Create a new intent to open the {@link OrderSummaryActivity}
         Intent intent = new Intent(OrderActivity.this, OrderSummaryActivity.class);
+        intent.putExtra(EXTRA_DONE_MSG, doneMsg);
         intent.putExtra(EXTRA_TOTAL_PRICE, mTotalPrice);
         intent.putExtra(EXTRA_TEA_NAME, mTeaName);
         intent.putExtra(EXTRA_SIZE, mSize);
