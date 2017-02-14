@@ -28,7 +28,7 @@ import com.example.android.teatime.model.Tea;
 import java.util.ArrayList;
 
 /**
- * Takes a String and returns it after a while via a callback.
+ * Returns an ArrayList of Teas after a while via a callback.
  * <p>
  * This executes a long-running operation on a different thread that results in problems with
  * Espresso if an {@link IdlingResource} is not implemented and registered.
@@ -69,7 +69,6 @@ class ImageDownloader {
         }
 
 
-        // Display a toast to let the user know the images are downloading
         String text = context.getString(R.string.loading_msg);
         int duration = Toast.LENGTH_LONG;
         Toast toast = Toast.makeText(context, text, duration);
